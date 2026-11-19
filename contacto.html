@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gioleba</title>
+  <meta name="description" content="Contanos tu idea y empecemos tu proyecto.">
+  <link rel="icon" href="img/logo-blanco.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- iconos font awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <!-- hoja de estilos compartida -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- cabecera y navegacion, el link activo se marca desde main.js -->
+  <header class="cabecera">
+    <div class="contenedor nav">
+      <!-- logo: reemplaza el archivo img/logo.svg por el tuyo -->
+      <a href="index.html" class="logo" aria-label="Gioleba, ir al inicio"><img src="img/logo.svg" alt="Gioleba" width="170" height="40"></a>
+      <button class="burger" aria-label="Abrir menú" aria-expanded="false"><span></span><span></span><span></span></button>
+      <ul class="menu">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="servicios.html">Servicios</a></li>
+          <!-- <li><a href="proyectos.html">Proyectos</a></li>-->
+        <li><a href="nosotros.html">Nosotros</a></li>
+        <li><a href="contacto.html">Contacto</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main>
+    <section class="pagina-titulo">
+      <div class="contenedor">
+        <h1 class="entra">Hablemos de tu proyecto</h1>
+        <p class="entra">Completá el formulario con lo que tengas en mente. Si no sabés por dónde empezar, contanos tu idea y la armamos juntos.</p>
+      </div>
+    </section>
+
+    <section class="seccion">
+      <div class="contenedor contacto-grid">
+
+        <!-- formulario grande, validacion en main.js -->
+        <div class="formulario reveal">
+          <form id="form-contacto" novalidate>
+            <h2>Contanos sobre tu idea</h2>
+            <p>Cuanto más detalle nos des, mejor vamos a poder ayudarte. Los campos con * son obligatorios.</p>
+            <div class="fila">
+              <div class="campo"><label for="nombre">Tu nombre *</label><input id="nombre" name="nombre" type="text" placeholder="Ej: Ana Pérez" autocomplete="name"><span class="msg-error">Escribí tu nombre para saber cómo llamarte.</span></div>
+              <div class="campo"><label for="email">Tu email *</label><input id="email" name="email" type="email" placeholder="ana@correo.com" autocomplete="email"><span class="msg-error">Revisá que el email esté bien escrito.</span></div>
+            </div>
+            <div class="fila">
+              <div class="campo"><label for="tel">WhatsApp o teléfono <small>(opcional)</small></label><input id="tel" name="tel" type="tel" placeholder="+54 11 ..."></div>
+              <div class="campo"><label for="negocio">Nombre de tu negocio <small>(opcional)</small></label><input id="negocio" name="negocio" type="text" placeholder="Ej: Café Central"></div>
+            </div>
+            <div class="campo">
+              <label>¿Qué necesitás?</label>
+              <div class="opciones">
+                <label><input type="checkbox" name="tipo" value="web"> Sitio web</label>
+                <label><input type="checkbox" name="tipo" value="tienda"> Tienda online</label>
+                <label><input type="checkbox" name="tipo" value="sistema"> Sistema a medida</label>
+                <label><input type="checkbox" name="tipo" value="rediseno"> Rediseñar mi web</label>
+                <label><input type="checkbox" name="tipo" value="no-se"> Todavía no lo sé</label>
+              </div>
+            </div>
+            <div class="campo"><label for="mensaje">Contanos tu idea *</label><textarea id="mensaje" name="mensaje" placeholder="¿A qué se dedica tu negocio? ¿Qué te gustaría que tenga tu sitio? ¿Tenés alguna web que te guste como referencia?"></textarea><span class="msg-error">Contanos un poco más (al menos unas pocas palabras).</span></div>
+            <button type="submit" class="btn btn-oscuro">Enviar mensaje</button>
+          </form>
+          <div class="exito">
+            <div class="icono"><i class="fa-solid fa-circle-check"></i></div>
+            <h3>¡Mensaje enviado!</h3>
+            <p>Gracias por escribirnos. Te respondemos en menos de 24 horas.</p>
+          </div>
+        </div>
+
+        <!-- columna lateral -->
+        <aside class="lateral">
+          <div class="tarjeta reveal">
+            <h3>¿Qué pasa después?</h3>
+            <ul class="pasos-lista" style="margin-top:14px">
+              <li><b>1</b>Leemos tu mensaje con atención.</li>
+              <li><b>2</b>Te respondemos en menos de 24 horas.</li>
+              <li><b>3</b>Coordinamos una charla sin compromiso.</li>
+            </ul>
+          </div>
+          <div class="tarjeta reveal">
+            <a class="dato" href="mailto:Gioleba@gmail.com"><div class="icono"><i class="fa-solid fa-envelope"></i></div><div><strong>Email</strong><span>Gioleba@gmail.com</span></div></a>
+            <a class="dato" href="https://wa.me/5491100000000" target="_blank" rel="noopener"><div class="icono"><i class="fa-brands fa-whatsapp"></i></div><div><strong>WhatsApp</strong><span>+54 11 0000 0000</span></div></a>
+            <a class="dato" href="https://instagram.com/Gioleba" target="_blank" rel="noopener"><div class="icono"><i class="fa-brands fa-instagram"></i></div><div><strong>Instagram</strong><span>@Gioleba</span></div></a>
+            <div class="dato"><div class="icono"><i class="fa-solid fa-location-dot"></i></div><div><strong>Ubicación</strong><span>Buenos Aires, Argentina</span></div></div>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+    <!-- pie de pagina -->
+  <footer class="pie">
+    <div class="contenedor">
+      <div class="pie-grid">
+        <div>
+          <!-- logo version clara para fondo oscuro: img/logo-blanco.svg -->
+          <a href="index.html" class="logo" aria-label="Gioleba, ir al inicio"><img src="img/logo-blanco.svg" alt="Gioleba" width="170" height="40"></a>
+          <p>Creamos sitios web claros, rápidos y hechos a la medida de tu negocio.</p>
+        </div>
+        <div>
+          <h4>Navegá</h4>
+          <ul>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="servicios.html">Servicios</a></li>
+            <li><a href="proyectos.html">Proyectos</a></li>
+            <li><a href="nosotros.html">Nosotros</a></li>
+            <li><a href="contacto.html">Contacto</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Contacto</h4>
+          <ul>
+            <li><a href="mailto:Gioleba@gmail.com"><i class="fa-solid fa-envelope"></i>Gioleba@gmail.com</a></li>
+            <li><a href="https://wa.me/5491100000000" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i>+54 11 0000 0000</a></li>
+            <li><a href="https://instagram.com/Gioleba" target="_blank" rel="noopener"><i class="fa-brands fa-instagram"></i>@Gioleba</a></li>
+            <li><span><i class="fa-solid fa-location-dot"></i>Buenos Aires, Argentina</span></li>
+          </ul>
+        </div>
+      </div>
+      <p class="pie-fin">© <span class="anio">2026</span> Gioleba. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <!-- comportamiento compartido -->
+  <script src="main.js"></script>
+</body>
+</html>

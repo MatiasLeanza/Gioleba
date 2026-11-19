@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>greenbrote | Tienda de plantas</title>
+<meta name="description" content="Plantas de interior, exterior y suculentas con envío a todo el país.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%2308170f'/%3E%3Cpath fill='%23d6ff4a' d='M16 5C10 11 8 15 8 18a8 8 0 0 0 16 0c0-3-2-7-8-13z'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ===== variables ===== */
+:root{--noche:#08170f;--bosque:#102c1c;--lima:#d6ff4a;--papel:#f0efe4;--tinta:#0b1a11;--menta:#9ee3b5;--coral:#ff6a4d;--disp:'Bricolage Grotesque','Arial Black',system-ui,sans-serif;--sans:'DM Sans',system-ui,sans-serif;--ease:cubic-bezier(.22,1,.36,1)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{font-family:var(--sans);background:var(--noche);color:var(--papel);line-height:1.55;-webkit-font-smoothing:antialiased}
+body.bloq{overflow:hidden}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer}
+.wrap{width:min(1240px,92%);margin-inline:auto}
+.ic{width:1em;height:1em;fill:currentColor;vertical-align:-.125em;flex:none}
+:focus-visible{outline:3px solid var(--lima);outline-offset:3px;border-radius:6px}
+
+/* ===== cinta superior ===== */
+.ticker{background:var(--lima);color:var(--tinta);overflow:hidden;padding:9px 0;font-weight:700;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase}
+.tk{display:flex;width:max-content;animation:desliza 40s linear infinite}
+.tk span{display:flex;align-items:center;gap:22px;padding-right:22px;white-space:nowrap}
+@keyframes desliza{to{transform:translateX(-50%)}}
+
+/* ===== navegacion ===== */
+.nav{position:sticky;top:0;z-index:50;background:rgba(8,23,15,.88);backdrop-filter:blur(12px);border-bottom:1px solid rgba(240,239,228,.12)}
+.nav .wrap{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:70px}
+.menu{display:flex;gap:28px;font-size:.9rem;font-weight:500}
+.menu a{position:relative;padding:4px 0}
+.menu a::after{content:"";position:absolute;left:0;bottom:0;height:2px;width:100%;background:var(--lima);transform:scaleX(0);transform-origin:right;transition:transform .4s var(--ease)}
+.menu a:hover::after{transform:scaleX(1);transform-origin:left}
+.logo{font-family:var(--disp);font-weight:800;font-size:1.65rem;letter-spacing:-.05em;display:flex;align-items:center;gap:8px}
+.logo .ic{color:var(--lima);transition:transform .6s var(--ease)}
+.logo:hover .ic{transform:rotate(180deg)}
+.acc{justify-self:end;display:flex;gap:8px;align-items:center}
+.sq{position:relative;width:44px;height:44px;border-radius:12px;border:1.5px solid rgba(240,239,228,.25);background:transparent;display:grid;place-items:center;transition:.3s var(--ease)}
+.sq:hover{background:var(--lima);color:var(--tinta);border-color:var(--lima);transform:translateY(-2px)}
+.badge{position:absolute;top:-8px;right:-8px;min-width:22px;height:22px;padding:0 5px;border-radius:22px;background:var(--coral);color:#fff;font-size:.72rem;font-weight:700;display:grid;place-items:center}
+.badge.bump{animation:bump .5s var(--ease)}
+@keyframes bump{40%{transform:scale(1.6)}}
+.user{display:none;align-items:center;gap:8px;font-size:.86rem;font-weight:700}
+.user.on{display:flex}
+.burger{display:none}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:15px 28px;border-radius:14px;border:2px solid var(--lima);background:var(--lima);color:var(--tinta);font-weight:700;font-size:.95rem;transition:transform .3s var(--ease),background .3s,color .3s}
+.btn:hover{transform:translateY(-4px) rotate(-1deg);background:#fff;border-color:#fff}
+.btn.borde{background:transparent;color:var(--papel);border-color:rgba(240,239,228,.4)}
+.btn.borde:hover{background:var(--papel);color:var(--tinta);border-color:var(--papel)}
+.btn.oscuro{background:var(--tinta);border-color:var(--tinta);color:var(--papel)}
+.btn.oscuro:hover{background:var(--lima);color:var(--tinta);border-color:var(--tinta)}
+.btn .ic{transition:transform .3s}
+.btn:hover .ic{transform:translateX(4px)}
+
+/* ===== hero ===== */
+.hero{position:relative;padding:70px 0 40px;overflow:hidden;background:radial-gradient(circle at 80% 20%,#14402a,transparent 55%),var(--noche)}
+.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center}
+.tag{display:inline-flex;align-items:center;gap:10px;border:1.5px solid rgba(240,239,228,.25);border-radius:30px;padding:7px 16px;font-size:.82rem;font-weight:500;margin-bottom:26px}
+.tag .ic{color:var(--lima)}
+.hero h1{font-family:var(--disp);font-weight:800;font-size:clamp(4.4rem,13.5vw,11.5rem);line-height:.82;letter-spacing:-.06em}
+.hero h1 span{display:block;overflow:hidden;padding-bottom:.2em;margin-bottom:-.12em}
+.hero h1 b{display:inline-block;font-weight:800;transform:translateY(105%);animation:sube-l 1s var(--ease) forwards;animation-delay:calc(.2s + var(--i) * .05s)}
+.hero h1 .l2{color:transparent;-webkit-text-stroke:2px var(--lima)}
+@keyframes sube-l{to{transform:none}}
+.lead{max-width:44ch;margin:30px 0 32px;font-size:1.1rem;color:rgba(240,239,228,.75);opacity:0;animation:aparece 1s 1s var(--ease) forwards}
+.cta{display:flex;gap:12px;flex-wrap:wrap;opacity:0;animation:aparece 1s 1.15s var(--ease) forwards}
+@keyframes aparece{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+.collage{position:relative;height:min(68vh,560px)}
+.ph{position:absolute;overflow:hidden;background:linear-gradient(135deg,#1c5a38,#3f9a63);display:grid;place-items:center;opacity:0;animation:aparece 1.1s var(--ease) forwards;transition:translate .3s ease-out}
+.ph>.ic{font-size:2.4rem;color:rgba(255,255,255,.5)}
+.ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.p1{left:0;top:4%;width:50%;height:70%;border-radius:26px;animation-delay:.5s}
+.p2{right:0;top:0;width:44%;aspect-ratio:1;border-radius:50%;animation-delay:.7s}
+.p3{right:4%;bottom:0;width:56%;height:38%;border-radius:26px;animation-delay:.9s}
+.giro{position:absolute;left:36%;bottom:6%;width:128px;height:128px;border-radius:50%;background:var(--lima);color:var(--tinta);display:grid;place-items:center;z-index:2;animation:aparece 1s 1.2s var(--ease) both}
+.giro>svg:not(.ic){position:absolute;inset:0;width:100%;height:100%;animation:gira 16s linear infinite}
+.giro text{font-size:10.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;fill:var(--tinta)}
+.giro .ic{font-size:1.6rem}
+@keyframes gira{to{transform:rotate(360deg)}}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:56px;padding-top:30px;border-top:1px solid rgba(240,239,228,.15)}
+.stats b{display:block;font-family:var(--disp);font-size:clamp(2rem,4vw,3.2rem);line-height:1;color:var(--lima)}
+.stats span{font-size:.88rem;color:rgba(240,239,228,.65)}
+
+/* ===== secciones ===== */
+.sec{padding:100px 0}
+.sec h2{font-family:var(--disp);font-weight:800;font-size:clamp(2.2rem,5vw,4rem);line-height:.98;letter-spacing:-.04em}
+.sec .sub{margin:12px 0 38px;color:rgba(240,239,228,.65);max-width:50ch}
+.reveal{opacity:0;transform:translateY(34px);transition:opacity .9s var(--ease),transform .9s var(--ease);transition-delay:var(--d,0ms)}
+.reveal.vis{opacity:1;transform:none}
+
+/* ===== categorias en mosaico ===== */
+.bento{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:220px;gap:16px}
+.t{position:relative;border-radius:24px;overflow:hidden;background:linear-gradient(135deg,#1c5a38,#3f9a63);text-align:left;border:0;color:#fff}
+.t:nth-child(1){grid-column:span 2;grid-row:span 2}
+.t:nth-child(4){grid-column:span 2}
+.t img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1s var(--ease)}
+.t:hover img{transform:scale(1.1)}
+.t::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(8,23,15,.88),transparent 62%)}
+.t div{position:absolute;left:22px;right:22px;bottom:20px;z-index:1;display:flex;align-items:end;justify-content:space-between;gap:10px}
+.t small{display:block;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;opacity:.8}
+.t h3{font-family:var(--disp);font-weight:800;font-size:clamp(1.5rem,3vw,2.4rem);line-height:1;letter-spacing:-.03em}
+.t:nth-child(1) h3{font-size:clamp(2.2rem,5vw,4rem)}
+.t i{width:46px;height:46px;border-radius:50%;background:var(--lima);color:var(--tinta);display:grid;place-items:center;transition:transform .5s var(--ease)}
+.t:hover i{transform:rotate(-45deg) scale(1.1)}
+
+/* ===== tienda ===== */
+.tienda{background:var(--papel);color:var(--tinta)}
+.tienda .sub{color:#53635a}
+.layout{display:grid;grid-template-columns:270px 1fr;gap:36px;align-items:start}
+.filtros{position:sticky;top:92px;background:#fff;border:2px solid var(--tinta);border-radius:20px;padding:22px;box-shadow:6px 6px 0 var(--tinta)}
+.filtros h4{font-family:var(--disp);font-size:.95rem;margin:20px 0 10px;text-transform:uppercase;letter-spacing:.06em}
+.filtros h4:first-child{margin-top:0}
+.buscar{position:relative}
+.buscar .ic{position:absolute;left:14px;top:50%;translate:0 -50%;color:#53635a}
+.buscar input{width:100%;padding:12px 14px 12px 40px;border:2px solid var(--tinta);border-radius:12px;background:var(--papel)}
+.buscar input:focus,.orden:focus,.campo input:focus{outline:0;box-shadow:0 0 0 4px rgba(214,255,74,.9)}
+.lista{display:flex;flex-direction:column;gap:6px}
+.cat{display:flex;justify-content:space-between;padding:9px 12px;border-radius:10px;border:2px solid transparent;background:none;font-weight:500;text-align:left;transition:.25s var(--ease)}
+.cat:hover{border-color:var(--tinta)}
+.cat.on{background:var(--tinta);color:var(--lima)}
+.cat em{font-style:normal;opacity:.6;font-size:.85rem}
+.nivs{display:flex;flex-wrap:wrap;gap:6px}
+.niv{display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border-radius:30px;border:2px solid var(--tinta);background:#fff;font-size:.8rem;font-weight:700;transition:.25s var(--ease)}
+.niv.on{background:var(--lima)}
+.rango{width:100%;accent-color:var(--tinta)}
+.precio-t{font-size:.9rem;font-weight:700}
+.limpiar{margin-top:18px;width:100%;padding:10px;border-radius:12px;border:2px dashed var(--tinta);background:none;font-weight:700;font-size:.85rem}
+.limpiar:hover{background:var(--lima)}
+.top-g{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:22px;font-weight:700}
+.orden{padding:10px 16px;border:2px solid var(--tinta);border-radius:12px;background:#fff}
+.grilla{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+.pc{background:#fff;border:2px solid var(--tinta);border-radius:22px;overflow:hidden;box-shadow:5px 5px 0 var(--tinta);transition:transform .35s var(--ease),box-shadow .35s var(--ease);opacity:0;animation:aparece .7s var(--ease) forwards;animation-delay:calc(var(--i) * 55ms)}
+.pc:hover{transform:translate(-4px,-4px);box-shadow:10px 10px 0 var(--tinta)}
+.pf{position:relative;aspect-ratio:4/5;background:linear-gradient(135deg,#cfe9d3,#7fbf95);display:grid;place-items:center;border-bottom:2px solid var(--tinta);overflow:hidden}
+.pf>.ic{font-size:3rem;color:rgba(255,255,255,.8)}
+.pf img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .9s var(--ease)}
+.pc:hover .pf img{transform:scale(1.08)}
+.num{position:absolute;top:12px;left:12px;z-index:1;background:var(--tinta);color:var(--lima);border-radius:8px;padding:2px 9px;font-family:var(--disp);font-weight:700;font-size:.8rem}
+.etq{position:absolute;top:12px;right:12px;z-index:1;background:var(--lima);border:2px solid var(--tinta);border-radius:30px;padding:2px 11px;font-size:.72rem;font-weight:700}
+.plus{position:absolute;right:12px;bottom:12px;z-index:1;width:50px;height:50px;border-radius:50%;border:2px solid var(--tinta);background:var(--lima);color:var(--tinta);font-size:1.1rem;display:grid;place-items:center;transition:transform .4s var(--ease),background .3s}
+.plus:hover{transform:rotate(90deg) scale(1.1);background:#fff}
+.plus.ok{background:var(--tinta);color:var(--lima);transform:scale(1.15)}
+.pi{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;padding:16px 18px 18px}
+.pi h3{font-family:var(--disp);font-weight:700;font-size:1.15rem;line-height:1.15;letter-spacing:-.02em}
+.pi small{display:flex;align-items:center;gap:6px;margin-top:6px;color:#53635a;font-size:.8rem}
+.pr{font-family:var(--disp);font-weight:800;font-size:1.05rem;background:var(--papel);border:2px solid var(--tinta);border-radius:10px;padding:3px 10px;white-space:nowrap}
+.vacio{grid-column:1/-1;text-align:center;padding:60px 0;color:#53635a}
+
+/* ===== pasos ===== */
+.pasos{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.paso{border:1.5px solid rgba(240,239,228,.18);border-radius:26px;padding:30px;transition:.4s var(--ease)}
+.paso:hover{background:var(--bosque);border-color:var(--lima);transform:translateY(-6px)}
+.paso b{display:block;font-family:var(--disp);font-size:4.5rem;line-height:1;color:transparent;-webkit-text-stroke:1.5px var(--lima);margin-bottom:16px}
+.paso h3{font-family:var(--disp);font-size:1.5rem;margin-bottom:6px;display:flex;align-items:center;gap:10px}
+.paso h3 .ic{color:var(--lima)}
+.paso p{color:rgba(240,239,228,.65);font-size:.95rem}
+
+/* ===== banda del codigo ===== */
+.cod{background:var(--lima);color:var(--tinta);padding:70px 0;overflow:hidden}
+.cod .wrap{display:flex;justify-content:space-between;align-items:center;gap:30px;flex-wrap:wrap}
+.cod h2{font-family:var(--disp);font-weight:800;font-size:clamp(3rem,10vw,8rem);line-height:.9;letter-spacing:-.06em}
+.cod p{max-width:34ch;font-weight:500;margin-bottom:18px}
+.pie{padding:60px 0 24px}
+.pie .gran{font-family:var(--disp);font-weight:800;font-size:clamp(3.6rem,17vw,15rem);line-height:.8;letter-spacing:-.07em;color:transparent;-webkit-text-stroke:1.5px rgba(240,239,228,.28);margin-top:30px;overflow:hidden;white-space:nowrap}
+.pie .wrap>div{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;color:rgba(240,239,228,.6);font-size:.9rem}
+
+/* ===== carrito a pantalla completa ===== */
+.carro{position:fixed;inset:0;z-index:90;background:var(--papel);color:var(--tinta);display:grid;grid-template-columns:1.3fr 1fr;transform:translateY(100%);visibility:hidden;transition:transform .7s var(--ease),visibility 0s .7s}
+.carro.on{transform:none;visibility:visible;transition:transform .7s var(--ease)}
+.c-izq{padding:34px clamp(20px,4vw,60px);overflow-y:auto}
+.c-izq h3{font-family:var(--disp);font-weight:800;font-size:clamp(2rem,4vw,3.2rem);letter-spacing:-.04em;margin-bottom:20px}
+.cerrar{position:absolute;top:18px;right:18px;z-index:3;width:48px;height:48px;border-radius:14px;border:2px solid var(--tinta);background:#fff;display:grid;place-items:center;transition:transform .4s var(--ease),background .3s}
+.cerrar:hover{transform:rotate(90deg);background:var(--lima)}
+.it{display:grid;grid-template-columns:100px 1fr auto;gap:18px;padding:18px 0;border-bottom:2px solid var(--tinta);animation:aparece .5s var(--ease)}
+.th{width:100px;height:100px;border-radius:16px;overflow:hidden;border:2px solid var(--tinta);background:linear-gradient(135deg,#cfe9d3,#7fbf95)}
+.th img{width:100%;height:100%;object-fit:cover}
+.it b{font-family:var(--disp);font-size:1.2rem;display:block;line-height:1.15}
+.it small{color:#53635a}
+.qty{display:inline-flex;align-items:center;margin-top:10px;border:2px solid var(--tinta);border-radius:12px;overflow:hidden;background:#fff}
+.qty button{width:36px;height:34px;border:0;background:none;transition:background .2s}
+.qty button:hover{background:var(--lima)}
+.qty i{font-style:normal;min-width:30px;text-align:center;font-weight:700}
+.lado{display:flex;flex-direction:column;align-items:flex-end;justify-content:space-between;font-family:var(--disp);font-weight:800;font-size:1.15rem}
+.lado button{border:0;background:none;color:#7b877f;font-size:1.05rem}
+.lado button:hover{color:var(--coral)}
+.vacio-c{text-align:center;color:#53635a;padding:70px 10px}
+.vacio-c .ic{font-size:3.4rem;display:block;margin:0 auto 14px;color:var(--tinta)}
+.c-der{background:var(--noche);color:var(--papel);padding:34px clamp(20px,3vw,44px);overflow-y:auto;display:flex;flex-direction:column}
+.c-der h4{font-family:var(--disp);font-size:1.4rem;margin:0 0 16px;padding-right:54px}
+.envio{font-size:.88rem;margin-bottom:6px}
+.barra{height:10px;border-radius:10px;background:rgba(240,239,228,.15);overflow:hidden;margin-bottom:24px}
+.barra i{display:block;height:100%;width:0;background:var(--lima);border-radius:10px;transition:width .7s var(--ease)}
+.cupon{display:flex;gap:8px}
+.cupon input{flex:1;min-width:0;padding:12px 16px;border-radius:12px;border:1.5px solid rgba(240,239,228,.3);background:transparent;text-transform:uppercase}
+.cupon input:focus{outline:0;border-color:var(--lima)}
+.cupon .btn{padding:12px 18px}
+.cupon-msg{font-size:.82rem;min-height:20px;margin:6px 0 16px;color:rgba(240,239,228,.6)}
+.cupon-msg.ok{color:var(--lima)}.cupon-msg.mal{color:var(--coral)}
+.res{display:flex;justify-content:space-between;padding:5px 0;font-size:.95rem;color:rgba(240,239,228,.75)}
+.res.desc{color:var(--lima)}
+.res.total{color:var(--papel);font-family:var(--disp);font-weight:800;font-size:1.9rem;border-top:1px solid rgba(240,239,228,.2);margin-top:10px;padding-top:16px}
+.iva{font-size:.78rem;color:rgba(240,239,228,.5);text-align:right;margin-bottom:20px}
+#b-pagar{width:100%;margin-top:auto}
+.exito{position:absolute;inset:0;z-index:2;display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:30px;background:var(--lima)}
+.exito.on{display:flex}
+.exito>.ic{font-size:4rem;margin-bottom:18px;animation:bump .9s var(--ease)}
+.exito h4{font-family:var(--disp);font-weight:800;font-size:clamp(2rem,5vw,3.6rem);line-height:1;letter-spacing:-.04em;margin-bottom:14px}
+.exito p{margin-bottom:6px}
+.exito .btn{margin-top:22px}
+
+/* ===== ingresar y crear cuenta ===== */
+.auth{position:fixed;inset:0;z-index:95;display:grid;grid-template-columns:1fr 1fr;background:var(--papel);color:var(--tinta);clip-path:circle(0 at 100% 0);visibility:hidden;transition:clip-path .9s var(--ease),visibility 0s .9s}
+.auth.on{clip-path:circle(160% at 100% 0);visibility:visible;transition:clip-path .9s var(--ease)}
+.a-izq{position:relative;background:var(--lima);padding:50px;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden}
+.a-izq h2{font-family:var(--disp);font-weight:800;font-size:clamp(2.6rem,6vw,5.4rem);line-height:.9;letter-spacing:-.05em;position:relative;z-index:1}
+.a-izq p{margin-top:14px;max-width:32ch;position:relative;z-index:1;font-weight:500}
+.a-izq>.ic{position:absolute;color:rgba(8,23,15,.12);animation:flota 9s ease-in-out infinite}
+.f1{font-size:16rem;top:-30px;right:-40px;rotate:20deg}
+.f2{font-size:8rem;top:34%;left:12%;rotate:-30deg;animation-delay:-4s}
+@keyframes flota{50%{transform:translateY(-24px) rotate(6deg)}}
+.a-der{display:flex;flex-direction:column;justify-content:center;padding:40px clamp(24px,6vw,90px);position:relative}
+.tabs{display:inline-flex;border:2px solid var(--tinta);border-radius:14px;overflow:hidden;margin-bottom:26px;align-self:flex-start}
+.tabs button{border:0;background:none;padding:11px 22px;font-weight:700;transition:.3s var(--ease)}
+.tabs button.on{background:var(--tinta);color:var(--lima)}
+.a-der h3{font-family:var(--disp);font-weight:800;font-size:2.4rem;letter-spacing:-.04em;line-height:1}
+.a-der>p{color:#53635a;margin:8px 0 22px}
+.campo{margin-bottom:14px;position:relative}
+.campo label{display:block;font-weight:700;font-size:.82rem;margin-bottom:5px}
+.campo input{width:100%;padding:14px 16px;border:2px solid var(--tinta);border-radius:12px;background:#fff}
+.ojo{position:absolute;right:6px;bottom:6px;width:38px;height:38px;border:0;border-radius:10px;background:none}
+.solo-reg{display:none}
+.auth.reg .solo-reg{display:block}
+.err-msg{color:#c4301b;font-size:.86rem;min-height:22px;margin-bottom:8px;font-weight:500}
+.a-der .btn{width:100%}
+
+/* ===== aviso ===== */
+.aviso{position:fixed;left:50%;bottom:26px;z-index:120;translate:-50% 150px;background:var(--lima);color:var(--tinta);border:2px solid var(--tinta);padding:13px 24px;border-radius:14px;font-weight:700;font-size:.92rem;display:flex;gap:10px;align-items:center;box-shadow:5px 5px 0 var(--tinta);transition:translate .6s var(--ease)}
+.aviso.on{translate:-50% 0}
+
+/* ===== responsive ===== */
+@media (max-width:1020px){.layout{grid-template-columns:1fr}.filtros{position:static}.grilla{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:900px){
+  .hero-grid{grid-template-columns:1fr}
+  .collage{height:420px}
+  .pasos{grid-template-columns:1fr}
+  .bento{grid-template-columns:1fr 1fr}
+  .carro{grid-template-columns:1fr;grid-template-rows:auto auto;overflow-y:auto}
+  .c-izq,.c-der{overflow:visible}
+  .auth{grid-template-columns:1fr}
+  .a-izq{display:none}
+}
+@media (max-width:700px){
+  .burger{display:grid}
+  .nav .wrap{grid-template-columns:auto 1fr auto}
+  .menu{position:absolute;top:70px;left:0;right:0;flex-direction:column;gap:0;background:var(--noche);padding:0 5%;max-height:0;overflow:hidden;transition:max-height .5s var(--ease),padding .5s;border-bottom:1px solid rgba(240,239,228,.12)}
+  .menu.on{max-height:240px;padding:10px 5% 22px}
+  .menu a{padding:12px 0}
+  .logo{justify-self:center}
+  .user span{display:none}
+  .stats{grid-template-columns:1fr 1fr 1fr;gap:10px}
+  .t:nth-child(1){grid-column:span 2}
+  .bento{grid-auto-rows:170px}
+  .grilla{gap:16px 12px}
+  .pi{flex-direction:column;padding:12px}
+  .pi h3{font-size:1rem}
+  .plus{width:42px;height:42px}
+  .it{grid-template-columns:76px 1fr auto}
+  .th{width:76px;height:76px}
+  .aviso{width:calc(100% - 28px);justify-content:center}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal,.pc,.lead,.cta,.ph,.giro{opacity:1;transform:none}.hero h1 b{transform:none}}
+.ph svg,.pf>svg,.th>svg,.t .art svg{width:100%;height:100%}
+.pf>svg,.th>svg,.t .art{position:absolute;inset:0}
+.th{position:relative}
+.pf>svg,.t .art svg{transition:transform .9s var(--ease)}
+.pc:hover .pf>svg,.t:hover .art svg{transform:scale(1.07)}
+.t .art{display:block}
+.t{color:var(--tinta)}
+.t::after{display:none}
+.t small{opacity:.7}
+.t i{background:var(--tinta);color:var(--lima)}
+</style>
+</head>
+<body>
+<!-- iconos: Font Awesome Free (licencia CC BY 4.0), https://fontawesome.com/license/free -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="i-arrow-right" viewBox="0 0 512 512"><path fill="currentColor" d="M502.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L402.7 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l370.7 0-105.4 105.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/></symbol><symbol id="i-bag-shopping" viewBox="0 0 448 512"><path fill="currentColor" d="M160 80c0-35.3 28.7-64 64-64s64 28.7 64 64l0 48-128 0 0-48zm-48 48l-64 0c-26.5 0-48 21.5-48 48L0 384c0 53 43 96 96 96l256 0c53 0 96-43 96-96l0-208c0-26.5-21.5-48-48-48l-64 0 0-48c0-61.9-50.1-112-112-112S112 18.1 112 80l0 48zm24 48a24 24 0 1 1 0 48 24 24 0 1 1 0-48zm152 24a24 24 0 1 1 48 0 24 24 0 1 1 -48 0z"/></symbol><symbol id="i-bars" viewBox="0 0 448 512"><path fill="currentColor" d="M0 96C0 78.3 14.3 64 32 64l384 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 128C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32l384 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 288c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32L32 448c-17.7 0-32-14.3-32-32s14.3-32 32-32l384 0c17.7 0 32 14.3 32 32z"/></symbol><symbol id="i-basket-shopping" viewBox="0 0 576 512"><path fill="currentColor" d="M288 0c6.6 0 12.9 2.7 17.4 7.5l144 152 .5 .5 78.1 0c17.7 0 32 14.3 32 32 0 14.5-9.6 26.7-22.8 30.7L491.1 429.9c-6.5 29.3-32.5 50.1-62.5 50.1l-281.3 0c-30 0-56-20.8-62.5-50.1l-46-207.2c-13.2-3.9-22.8-16.2-22.8-30.7 0-17.7 14.3-32 32-32l78.1 0 .5-.5 144-152C275.1 2.7 281.4 0 288 0zm0 58.9L192.2 160 383.8 160 288 58.9zM208 264c0-13.3-10.7-24-24-24s-24 10.7-24 24l0 112c0 13.3 10.7 24 24 24s24-10.7 24-24l0-112zm80-24c-13.3 0-24 10.7-24 24l0 112c0 13.3 10.7 24 24 24s24-10.7 24-24l0-112c0-13.3-10.7-24-24-24zm128 24c0-13.3-10.7-24-24-24s-24 10.7-24 24l0 112c0 13.3 10.7 24 24 24s24-10.7 24-24l0-112z"/></symbol><symbol id="i-box-open" viewBox="0 0 640 512"><path fill="currentColor" d="M560.3 237.2c10.4 11.8 28.3 14.4 41.8 5.5 14.7-9.8 18.7-29.7 8.9-44.4l-48-72c-2.8-4.2-6.6-7.7-11.1-10.2L351.4 4.7c-19.3-10.7-42.8-10.7-62.2 0L88.8 116c-5.4 3-9.7 7.4-12.6 12.8L27.7 218.7c-12.6 23.4-3.8 52.5 19.6 65.1l33 17.7 0 53.3c0 23 12.4 44.3 32.4 55.7l176 99.7c19.6 11.1 43.5 11.1 63.1 0l176-99.7c20.1-11.4 32.4-32.6 32.4-55.7l0-117.5zm-240-9.8L170.2 144 320.3 60.6 470.4 144 320.3 227.4zm-41.5 50.2l-21.3 46.2-165.8-88.8 25.4-47.2 161.7 89.8z"/></symbol><symbol id="i-check" viewBox="0 0 448 512"><path fill="currentColor" d="M434.8 70.1c14.3 10.4 17.5 30.4 7.1 44.7l-256 352c-5.5 7.6-14 12.3-23.4 13.1s-18.5-2.7-25.1-9.3l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l101.5 101.5 234-321.7c10.4-14.3 30.4-17.5 44.7-7.1z"/></symbol><symbol id="i-circle-check" viewBox="0 0 512 512"><path fill="currentColor" d="M256 512a256 256 0 1 1 0-512 256 256 0 1 1 0 512zM374 145.7c-10.7-7.8-25.7-5.4-33.5 5.3L221.1 315.2 169 263.1c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l72 72c5 5 11.8 7.5 18.8 7s13.4-4.1 17.5-9.8L379.3 179.2c7.8-10.7 5.4-25.7-5.3-33.5z"/></symbol><symbol id="i-droplet" viewBox="0 0 384 512"><path fill="currentColor" d="M192 512C86 512 0 426 0 320 0 228.8 130.2 45.9 166.6-3.5 172.5-11.5 181.8-16 191.8-16l.4 0c10 0 19.3 4.5 25.2 12.5 36.4 49.4 166.6 232.3 166.6 323.5 0 106-86 192-192 192zM112 312c0-13.3-10.7-24-24-24s-24 10.7-24 24c0 75.1 60.9 136 136 136 13.3 0 24-10.7 24-24s-10.7-24-24-24c-48.6 0-88-39.4-88-88z"/></symbol><symbol id="i-eye" viewBox="0 0 576 512"><path fill="currentColor" d="M288 32c-80.8 0-145.5 36.8-192.6 80.6-46.8 43.5-78.1 95.4-93 131.1-3.3 7.9-3.3 16.7 0 24.6 14.9 35.7 46.2 87.7 93 131.1 47.1 43.7 111.8 80.6 192.6 80.6s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1 3.3-7.9 3.3-16.7 0-24.6-14.9-35.7-46.2-87.7-93-131.1-47.1-43.7-111.8-80.6-192.6-80.6zM144 256a144 144 0 1 1 288 0 144 144 0 1 1 -288 0zm144-64c0 35.3-28.7 64-64 64-11.5 0-22.3-3-31.7-8.4-1 10.9-.1 22.1 2.9 33.2 13.7 51.2 66.4 81.6 117.6 67.9s81.6-66.4 67.9-117.6c-12.2-45.7-55.5-74.8-101.1-70.8 5.3 9.3 8.4 20.1 8.4 31.7z"/></symbol><symbol id="i-eye-slash" viewBox="0 0 576 512"><path fill="currentColor" d="M41-24.9c-9.4-9.4-24.6-9.4-33.9 0S-2.3-.3 7 9.1l528 528c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-96.4-96.4c2.7-2.4 5.4-4.8 8-7.2 46.8-43.5 78.1-95.4 93-131.1 3.3-7.9 3.3-16.7 0-24.6-14.9-35.7-46.2-87.7-93-131.1-47.1-43.7-111.8-80.6-192.6-80.6-56.8 0-105.6 18.2-146 44.2L41-24.9zM204.5 138.7c23.5-16.8 52.4-26.7 83.5-26.7 79.5 0 144 64.5 144 144 0 31.1-9.9 59.9-26.7 83.5l-34.7-34.7c12.7-21.4 17-47.7 10.1-73.7-13.7-51.2-66.4-81.6-117.6-67.9-8.6 2.3-16.7 5.7-24 10l-34.7-34.7zM325.3 395.1c-11.9 3.2-24.4 4.9-37.3 4.9-79.5 0-144-64.5-144-144 0-12.9 1.7-25.4 4.9-37.3L69.4 139.2c-32.6 36.8-55 75.8-66.9 104.5-3.3 7.9-3.3 16.7 0 24.6 14.9 35.7 46.2 87.7 93 131.1 47.1 43.7 111.8 80.6 192.6 80.6 37.3 0 71.2-7.9 101.5-20.6l-64.2-64.2z"/></symbol><symbol id="i-leaf" viewBox="0 0 512 512"><path fill="currentColor" d="M471.3 6.7C477.7 .6 487-1.6 495.6 1.2 505.4 4.5 512 13.7 512 24l0 186.9c0 131.2-108.1 237.1-238.8 237.1-77 0-143.4-49.5-167.5-118.7-35.4 30.8-57.7 76.1-57.7 126.7 0 13.3-10.7 24-24 24S0 469.3 0 456C0 381.1 38.2 315.1 96.1 276.3 131.4 252.7 173.5 240 216 240l80 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-80 0c-39.7 0-77.3 8.8-111 24.5 23.3-70 89.2-120.5 167-120.5 66.4 0 115.8-22.1 148.7-44 19.2-12.8 35.5-28.1 50.7-45.3z"/></symbol><symbol id="i-lock" viewBox="0 0 384 512"><path fill="currentColor" d="M128 96l0 64 128 0 0-64c0-35.3-28.7-64-64-64s-64 28.7-64 64zM64 160l0-64C64 25.3 121.3-32 192-32S320 25.3 320 96l0 64c35.3 0 64 28.7 64 64l0 224c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 224c0-35.3 28.7-64 64-64z"/></symbol><symbol id="i-magnifying-glass" viewBox="0 0 512 512"><path fill="currentColor" d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376C296.3 401.1 253.9 416 208 416 93.1 416 0 322.9 0 208S93.1 0 208 0 416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/></symbol><symbol id="i-minus" viewBox="0 0 448 512"><path fill="currentColor" d="M0 256c0-17.7 14.3-32 32-32l384 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 288c-17.7 0-32-14.3-32-32z"/></symbol><symbol id="i-plus" viewBox="0 0 448 512"><path fill="currentColor" d="M256 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 160-160 0c-17.7 0-32 14.3-32 32s14.3 32 32 32l160 0 0 160c0 17.7 14.3 32 32 32s32-14.3 32-32l0-160 160 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-160 0 0-160z"/></symbol><symbol id="i-right-from-bracket" viewBox="0 0 512 512"><path fill="currentColor" d="M505 273c9.4-9.4 9.4-24.6 0-33.9L361 95c-6.9-6.9-17.2-8.9-26.2-5.2S320 102.3 320 112l0 80-112 0c-26.5 0-48 21.5-48 48l0 32c0 26.5 21.5 48 48 48l112 0 0 80c0 9.7 5.8 18.5 14.8 22.2s19.3 1.7 26.2-5.2L505 273zM160 96c17.7 0 32-14.3 32-32s-14.3-32-32-32L96 32C43 32 0 75 0 128L0 384c0 53 43 96 96 96l64 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-64 0c-17.7 0-32-14.3-32-32l0-256c0-17.7 14.3-32 32-32l64 0z"/></symbol><symbol id="i-seedling" viewBox="0 0 512 512"><path fill="currentColor" d="M512 32C512 140.1 435.4 230.3 333.6 251.4 325.7 193.3 299.6 141 261.1 100.5 301.2 40 369.9 0 448 0l32 0c17.7 0 32 14.3 32 32zM0 96C0 78.3 14.3 64 32 64l32 0c123.7 0 224 100.3 224 224l0 192c0 17.7-14.3 32-32 32s-32-14.3-32-32l0-160C100.3 320 0 219.7 0 96z"/></symbol><symbol id="i-sun" viewBox="0 0 576 512"><path fill="currentColor" d="M288-32c8.4 0 16.3 4.4 20.6 11.7L364.1 72.3 468.9 46c8.2-2 16.9 .4 22.8 6.3S500 67 498 75.1l-26.3 104.7 92.7 55.5c7.2 4.3 11.7 12.2 11.7 20.6s-4.4 16.3-11.7 20.6L471.7 332.1 498 436.8c2 8.2-.4 16.9-6.3 22.8S477 468 468.9 466l-104.7-26.3-55.5 92.7c-4.3 7.2-12.2 11.7-20.6 11.7s-16.3-4.4-20.6-11.7L211.9 439.7 107.2 466c-8.2 2-16.8-.4-22.8-6.3S76 445 78 436.8l26.2-104.7-92.6-55.5C4.4 272.2 0 264.4 0 256s4.4-16.3 11.7-20.6L104.3 179.9 78 75.1c-2-8.2 .3-16.8 6.3-22.8S99 44 107.2 46l104.7 26.2 55.5-92.6 1.8-2.6c4.5-5.7 11.4-9.1 18.8-9.1zm0 144a144 144 0 1 0 0 288 144 144 0 1 0 0-288zm0 240a96 96 0 1 1 0-192 96 96 0 1 1 0 192z"/></symbol><symbol id="i-trash-can" viewBox="0 0 448 512"><path fill="currentColor" d="M136.7 5.9C141.1-7.2 153.3-16 167.1-16l113.9 0c13.8 0 26 8.8 30.4 21.9L320 32 416 32c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 96C14.3 96 0 81.7 0 64S14.3 32 32 32l96 0 8.7-26.1zM32 144l384 0 0 304c0 35.3-28.7 64-64 64L96 512c-35.3 0-64-28.7-64-64l0-304zm88 64c-13.3 0-24 10.7-24 24l0 192c0 13.3 10.7 24 24 24s24-10.7 24-24l0-192c0-13.3-10.7-24-24-24zm104 0c-13.3 0-24 10.7-24 24l0 192c0 13.3 10.7 24 24 24s24-10.7 24-24l0-192c0-13.3-10.7-24-24-24zm104 0c-13.3 0-24 10.7-24 24l0 192c0 13.3 10.7 24 24 24s24-10.7 24-24l0-192c0-13.3-10.7-24-24-24z"/></symbol><symbol id="i-user" viewBox="0 0 448 512"><path fill="currentColor" d="M224 248a120 120 0 1 0 0-240 120 120 0 1 0 0 240zm-29.7 56C95.8 304 16 383.8 16 482.3 16 498.7 29.3 512 45.7 512l356.6 0c16.4 0 29.7-13.3 29.7-29.7 0-98.5-79.8-178.3-178.3-178.3l-59.4 0z"/></symbol><symbol id="i-xmark" viewBox="0 0 384 512"><path fill="currentColor" d="M55.1 73.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L147.2 256 9.9 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192.5 301.3 329.9 438.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.8 256 375.1 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192.5 210.7 55.1 73.4z"/></symbol></svg>
+
+<!-- cinta de promociones -->
+<div class="ticker" aria-hidden="true"><div class="tk" id="tk"><span>Envío gratis desde $60.000 <svg class="ic" aria-hidden="true"><use href="#i-leaf"/></svg> 30 días de garantía <svg class="ic" aria-hidden="true"><use href="#i-leaf"/></svg> Código GREEN10 en tu primera compra <svg class="ic" aria-hidden="true"><use href="#i-leaf"/></svg> Plantas sanas, siempre <svg class="ic" aria-hidden="true"><use href="#i-leaf"/></svg></span></div></div>
+
+<!-- navegacion centrada con carrito y cuenta -->
+<header class="nav">
+  <div class="wrap">
+    <div style="display:flex;align-items:center;gap:12px">
+      <button class="sq burger" id="burger" aria-label="Abrir menú"><svg class="ic" aria-hidden="true"><use href="#i-bars"/></svg></button>
+      <nav class="menu" id="menu"><a href="#categorias">Categorías</a><a href="#tienda">Tienda</a></nav>
+    </div>
+    <a href="#inicio" class="logo"><svg class="ic" aria-hidden="true"><use href="#i-leaf"/></svg>greenbrote</a>
+    <div class="acc">
+      <div class="user" id="user"><span id="user-n"></span><button class="sq" id="salir" aria-label="Cerrar sesión" title="Cerrar sesión"><svg class="ic" aria-hidden="true"><use href="#i-right-from-bracket"/></svg></button></div>
+      <button class="sq" id="b-cuenta" aria-label="Ingresar o crear cuenta"><svg class="ic" aria-hidden="true"><use href="#i-user"/></svg></button>
+      <button class="sq" id="b-carro" aria-label="Abrir carrito"><svg class="ic" aria-hidden="true"><use href="#i-bag-shopping"/></svg><span class="badge" id="badge">0</span></button>
+    </div>
+  </div>
+</header>
+
+<main id="inicio">
+  <!-- hero -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <h1><span data-letras>green</span><span class="l2" data-letras>brote</span></h1>
+        <p class="lead">Plantas de interior, exterior y suculentas, listas para crecer. Elegí tus favoritas, sumalas al carrito y recibilas en tu casa.</p>
+        <div class="cta">
+          <a href="#tienda" class="btn">Ver la tienda <svg class="ic" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+          <button class="btn borde" data-abrir-cuenta><svg class="ic" aria-hidden="true"><use href="#i-user"/></svg>Crear cuenta</button>
+        </div>
+      </div>
+      <div class="collage" aria-hidden="true">
+        <div class="ph p1" data-v="26" data-arte="monstera"></div>
+        <div class="ph p2" data-v="-34" data-arte="echeveria"></div>
+        <div class="ph p3" data-v="18" data-arte="cactus"></div>
+        <div class="giro"><svg viewBox="0 0 120 120"><defs><path id="circ" d="M60,60 m-47,0 a47,47 0 1,1 94,0 a47,47 0 1,1 -94,0"/></defs><text><textPath href="#circ">envío a todo el país • plantas sanas • </textPath></text></svg><svg class="ic" aria-hidden="true"><use href="#i-leaf"/></svg></div>
+      </div>
+    </div>
+   
+  </section>
+
+  <!-- categorias -->
+  <section class="sec wrap" id="categorias">
+    <h2 class="reveal">Elegí tu<br>mundo verde</h2>
+    <p class="sub reveal">Tocá una categoría y te llevamos directo a las plantas.</p>
+    <div class="bento" id="bento"></div>
+  </section>
+
+  <!-- tienda -->
+  <section class="sec tienda" id="tienda">
+    <div class="wrap">
+      <h2 class="reveal">Plantas para<br>cada rincón</h2>
+      <p class="sub reveal">Filtrá por categoría, luz o precio y encontrá la ideal para tu espacio.</p>
+      <div class="layout">
+        <aside class="filtros reveal" aria-label="Filtros">
+          <h4>Buscar</h4>
+          <label class="buscar"><svg class="ic" aria-hidden="true"><use href="#i-magnifying-glass"/></svg><input type="search" id="q" placeholder="Nombre de la planta" aria-label="Buscar plantas"></label>
+          <h4>Categoría</h4>
+          <div class="lista" id="cats"></div>
+          <h4>Luz que tenés</h4>
+          <div class="nivs" id="nivs"></div>
+          <h4>Precio máximo</h4>
+          <input type="range" class="rango" id="max" min="4000" max="35000" step="500" value="35000" aria-label="Precio máximo">
+          <div class="precio-t" id="max-t"></div>
+          <button class="limpiar" id="limpiar">Limpiar filtros</button>
+        </aside>
+        <div>
+          <div class="top-g">
+            <span id="cuenta"></span>
+            <select class="orden" id="orden" aria-label="Ordenar"><option value="">Ordenar por</option><option value="asc">Precio: menor a mayor</option><option value="desc">Precio: mayor a menor</option><option value="az">Nombre A-Z</option></select>
+          </div>
+          <div class="grilla" id="grilla"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- como funciona -->
+  
+
+  <!-- codigo de descuento -->
+  <section class="cod">
+    <div class="wrap">
+      <h2 class="reveal">GREEN10</h2>
+      <div class="reveal" style="--d:120ms"><p>Usá este código en el carrito y llevate 10% de descuento en tu primera compra.</p><a href="#tienda" class="btn oscuro">Empezar a comprar <svg class="ic" aria-hidden="true"><use href="#i-arrow-right"/></svg></a></div>
+    </div>
+  </section>
+</main>
+
+<footer class="pie">
+  <div class="wrap">
+    <div><span>© <span id="anio">2026</span> greenbrote. Todos los derechos reservados.</span></div>
+    <div class="gran" aria-hidden="true">greenbrote</div>
+  </div>
+</footer>
+
+<!-- carrito a pantalla completa -->
+<section class="carro" id="carro" aria-label="Carrito de compras">
+  <button class="cerrar" id="x-carro" aria-label="Cerrar carrito"><svg class="ic" aria-hidden="true"><use href="#i-xmark"/></svg></button>
+  <div class="c-izq"><h3>Tu carrito</h3><div id="items"></div></div>
+  <div class="c-der" id="c-der">
+    <h4>Resumen</h4>
+    <div class="envio" id="envio-t"></div>
+    <div class="barra"><i id="envio-b"></i></div>
+    <div class="cupon"><input id="cupon" placeholder="Código de descuento" aria-label="Código de descuento"><button class="btn" id="b-cupon" type="button">Aplicar</button></div>
+    <div class="cupon-msg" id="cupon-msg"></div>
+    <div class="res"><span>Subtotal</span><span id="r-sub"></span></div>
+    <div class="res desc" id="r-desc-f"><span id="r-desc-n"></span><span id="r-desc"></span></div>
+    <div class="res"><span>Envío</span><span id="r-env"></span></div>
+    <div class="res total"><span>Total</span><span id="r-tot"></span></div>
+    <div class="iva" id="r-iva"></div>
+    <button class="btn" id="b-pagar"><svg class="ic" aria-hidden="true"><use href="#i-lock"/></svg>Finalizar compra</button>
+  </div>
+  <div class="exito" id="exito"></div>
+</section>
+
+<!-- ingresar / crear cuenta -->
+<section class="auth" id="auth" role="dialog" aria-modal="true" aria-labelledby="a-tit">
+  <div class="a-izq" aria-hidden="true"><svg class="ic f1" aria-hidden="true"><use href="#i-leaf"/></svg><svg class="ic f2" aria-hidden="true"><use href="#i-seedling"/></svg><h2>Tu jungla<br>empieza acá.</h2><p>Guardá tus datos, seguí tus pedidos y comprá más rápido.</p></div>
+  <div class="a-der">
+    <button class="cerrar" id="x-auth" aria-label="Cerrar"><svg class="ic" aria-hidden="true"><use href="#i-xmark"/></svg></button>
+    <div class="tabs"><button class="on" data-modo="login" type="button">Ingresar</button><button data-modo="reg" type="button">Crear cuenta</button></div>
+    <h3 id="a-tit">Bienvenido</h3>
+    <p id="a-sub"></p>
+    <form id="form-auth" novalidate>
+      <div class="campo solo-reg"><label for="a-n">Nombre</label><input id="a-n" autocomplete="name" placeholder="Tu nombre"></div>
+      <div class="campo"><label for="a-e">Email</label><input id="a-e" type="email" autocomplete="email" placeholder="nombre@correo.com"></div>
+      <div class="campo"><label for="a-p">Contraseña</label><input id="a-p" type="password" placeholder="Mínimo 6 caracteres"><button type="button" class="ojo" id="ojo" aria-label="Mostrar contraseña"><svg class="ic" aria-hidden="true"><use href="#i-eye"/></svg></button></div>
+      <div class="err-msg" id="a-err" role="alert"></div>
+      <button class="btn oscuro" type="submit" id="a-btn">Ingresar</button>
+    </form>
+  </div>
+</section>
+<div class="aviso" id="aviso"><svg class="ic" aria-hidden="true"><use href="#i-circle-check"/></svg><span></span></div>
+
+<script>
+/* ===== productos: aca se editan o se agregan los tuyos =====
+   n nombre, c categoria, p precio, luz texto de luz, nv nivel de luz (1 a 4, 0 si no aplica)
+   tipo dibujo de la planta, m color de la maceta, bg color de fondo
+   img foto real opcional, ej: 'img/plantas/monstera.jpg' (si la completas, reemplaza al dibujo) */
+const PRODUCTOS = [
+ {id:1,n:'Monstera deliciosa',c:'Interior',p:18900,luz:'Luz suave',nv:2,tipo:'monstera',m:'#d98c5f',bg:'#dcecc9',etq:'Top ventas',img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3-c8m2ynVmy0giBHGcTYcqj8NDbhC9hVzp-RiwI6CHg&s=10'},
+ {id:2,n:'Potus',c:'Interior',p:8500,luz:'Poca luz',nv:1,tipo:'potus',m:'#f0efe4',bg:'#f7e4d3',img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSonlda4iGbWI1nD0jaPsstlmK_I6vZvBNwSFoO6xu7A&s=10'},
+ {id:3,n:'Sansevieria',c:'Interior',p:9800,luz:'Poca luz',nv:1,tipo:'sansevieria',m:'#2c3e34',bg:'#e2e8f3',img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTb20jY7LBm8NFlPkhUfppnPfrzynjAaT4gxLWerg1x7A&s=10'},
+ {id:4,n:'Ficus lyrata',c:'Interior',p:32500,luz:'Luz brillante',nv:3,tipo:'ficus',m:'#e8d3b6',bg:'#f3ead6',etq:'Nueva',img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQed7eYF5213SlVonqB5ZBCZ43pAlGi7J_JQpttV-VwEw&s=10'},
+ {id:5,n:'Aloe vera',c:'Suculentas',p:6200,luz:'Sol directo',nv:4,tipo:'aloe',m:'#d98c5f',bg:'#d9efe4',img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgVNeNz4uujmLIdHMtxdPToWjH3WRkhhNVp5bdl_xig8ZY_9fVgCT0dww&s=10'},
+ {id:6,n:'Echeveria',c:'Suculentas',p:4800,luz:'Sol directo',nv:4,tipo:'echeveria',m:'#9db4c0',bg:'#f1dede',img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1J5sad037OBDRK-8NXKUSJPRnAnZN8hhulvvgRUxw4g&s=10'},
+ {id:7,n:'Cactus columnar',c:'Suculentas',p:7400,luz:'Sol directo',nv:4,tipo:'cactus',m:'#c8704a',bg:'#fbe9c8',img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPMsdKkOXHsndD-dYc0XGVhvKw1AsISqAaYJMoa5sVMw&s=10'},
+ {id:8,n:'Helecho de Boston',c:'Interior',p:11500,luz:'Luz suave',nv:2,tipo:'helecho',m:'#2c3e34',bg:'#d6ebd8',img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTr0UOwMjmU5k1rG2-D19Aqjgrv4nZ57DPA_adiMPoMdA&s=10'},
+ {id:9,n:'Lavanda',c:'Exterior',p:5600,luz:'Sol directo',nv:4,tipo:'lavanda',m:'#d98c5f',bg:'#e8dff5',img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSyCr-vsk1qrdeDPPTbHl21ICzj7selBk6XtfsUW5wGXg&s=10'},
+ {id:10,n:'Jazmín',c:'Exterior',p:12900,luz:'Sol directo',nv:4,tipo:'jazmin',m:'#f0efe4',bg:'#fde6ea',img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRJbFol7p0T3uWAZBruaKc_AgfAQv08JckuqCiOg1XafQ&s=10'},
+ {id:11,n:'Palmera areca',c:'Interior',p:24800,luz:'Luz brillante',nv:3,tipo:'palmera',m:'#e8d3b6',bg:'#d8ecd0',img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNk7JQCP3CyWU1_baiVcfkyGevvDPka1jFfL_8LEYqgA&s=10'},
+ {id:12,n:'Maceta de cerámica',c:'Macetas',p:6900,luz:'Diámetro 18 cm',nv:0,tipo:'maceta',m:'#d98c5f',bg:'#e6e1d2',etq:'Combina con todo',img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ673IB8DkQ31FoePZrcHbXvP_-ECpp1dC48J_wjHSrfw&s=10'},
+ {id:13,n:'Calathea',c:'Interior',p:14200,luz:'Luz suave',nv:2,tipo:'potus',m:'#2c3e34',bg:'#dce8df',img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjJd-0_Nn0v6-vzIMlRuriMQS-5zksygueAEiiTUzv5w&s=10'},
+ {id:14,n:'Haworthia',c:'Suculentas',p:5400,luz:'Luz brillante',nv:3,tipo:'echeveria',m:'#d98c5f',bg:'#e7efe8',img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSAy26PK_rAQLVTX73_F1v9QlXhWoC1IifxshGXhD2KsQ&s=10'},
+ {id:15,n:'Romero',c:'Exterior',p:6800,luz:'Sol directo',nv:4,tipo:'lavanda',m:'#c8704a',bg:'#e4ede2',img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvSDCf6QYLqA0xutILrATDkmKtNLwMOBz_WwqA9Ch88g&s=10'},
+ {id:16,n:'Peperomia',c:'Interior',p:9200,luz:'Luz suave',nv:2,tipo:'potus',m:'#e8d3b6',bg:'#dce8df',img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQS_g0jwJ1p_UvpK53Gnf5wfDWG2FBqtQTm0hfAFOTEMw&s=10'},
+ {id:17,n:'Kalanchoe',c:'Suculentas',p:6500,luz:'Sol directo',nv:4,tipo:'echeveria',m:'#d98c5f',bg:'#f1dede',img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScU5Qxgh1vgLHXrAMtVNHt97e3j4nVIfB3XYLwNF-hzg&s=10'}
+];
+const NIVELES = {1:'Poca luz',2:'Luz suave',3:'Luz brillante',4:'Sol directo'};
+const TILE = {Interior:['monstera','#cfe3b8'],Suculentas:['echeveria','#f3d9c4'],Exterior:['lavanda','#e3d6f2'],Macetas:['maceta','#d6e8dc']};
+const ENVIO = 5500, GRATIS = 60000, IVA = 0.21;
+const CUPONES = {GREEN10: .10, VERDE15: .15};
+
+/* ===== utilidades ===== */
+const $ = s => document.querySelector(s);
+const money = n => '$' + Math.round(n).toLocaleString('es-AR');
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const leer = (k, d) => { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch (e) { return d; } };
+const guardar = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} };
+/* ===== ilustraciones de plantas: se dibujan con codigo, no dependen de fotos externas ===== */
+const G = ['#2f8f4f', '#3fa862', '#1f6b3b', '#58bf7a'];
+const H = (x, y, a, l, w, c) => `<path transform="translate(${x} ${y}) rotate(${a})" d="M0 0C${w} ${-l * .3} ${w} ${-l * .75} 0 ${-l}C${-w} ${-l * .75} ${-w} ${-l * .3} 0 0z" fill="${c}"/>`;
+const V = (x, y, a, l, c, w = 2) => `<path transform="translate(${x} ${y}) rotate(${a})" d="M0 0V${-l}" stroke="${c}" stroke-width="${w}" stroke-linecap="round"/>`;
+const maceta = (c, w = 64) => `<path d="M${100 - w / 2} 188h${w}l-7 48h-${w - 14}z" fill="${c}" stroke="${c}" stroke-width="6" stroke-linejoin="round"/><rect x="${96 - w / 2}" y="181" width="${w + 8}" height="14" rx="6" fill="${c}"/><rect x="${96 - w / 2}" y="181" width="${w + 8}" height="5" rx="2.5" fill="rgba(255,255,255,.3)"/>`;
+function arte(t, c = '#d98c5f') {
+  let d = '';
+  const abanico = (n, desde, paso, l, w, y = 186) => { for (let i = 0; i < n; i++) d += H(100, y, desde + i * paso, l, w, G[i % 4]); };
+  if (t === 'monstera') abanico(7, -66, 22, 92, 34);
+  else if (t === 'ficus') { d += V(100, 190, 0, 150, '#6b4a2f', 4); [[-45, 60], [45, 85], [-40, 110], [42, 135], [0, 150]].forEach(([a, h], i) => d += H(100, 186 - h, a, 62, 28, G[i % 4])); }
+  else if (t === 'potus') { abanico(9, -84, 21, 54, 19); d += H(70, 190, 160, 30, 12, G[1]) + H(132, 190, 200, 34, 12, G[3]); }
+  else if (t === 'sansevieria') [[-20, 105], [-9, 128], [0, 140], [9, 125], [20, 100]].forEach(([a, l]) => d += H(100 + a * .6, 188, a, l, 13, '#1f6b3b') + H(100 + a * .6, 188, a, l * .9, 5, '#58bf7a'));
+  else if (t === 'aloe') abanico(9, -72, 18, 80, 16);
+  else if (t === 'echeveria') {
+    for (let i = 0; i < 9; i++) d += H(100, 186, -80 + i * 20, 46, 20, '#7fc4a0');
+    for (let i = 0; i < 6; i++) d += H(100, 186, -55 + i * 22, 34, 15, '#a6dcc0');
+    d += H(100, 186, 0, 22, 9, '#e4f5ec');
+  }
+  else if (t === 'cactus') d += '<rect x="86" y="70" width="28" height="122" rx="14" fill="#3a9a5a"/><path d="M86 140h-14a10 10 0 0 1-10-10V104a9 9 0 0 1 18 0v16h6z" fill="#3a9a5a"/><path d="M114 120h14a10 10 0 0 0 10-10V86a9 9 0 0 0-18 0v14h-6z" fill="#3a9a5a"/><path d="M100 78v110M93 90v96M107 90v96" stroke="#2a7a46" stroke-width="2" stroke-linecap="round"/>';
+  else if (t === 'helecho') abanico(11, -75, 15, 92, 9);
+  else if (t === 'lavanda') {
+    abanico(5, -50, 25, 50, 8);
+    [70, 85, 100, 115, 130].forEach((x, i) => {
+      const a = (x - 100) / 6 * Math.PI / 180, L = 118 + (i % 3) * 10, tx = x + Math.sin(a) * L, ty = 186 - Math.cos(a) * L;
+      d += `<path d="M${x} 186L${tx} ${ty}" stroke="#4a9a5c" stroke-width="2"/>`;
+      for (let j = 0; j < 6; j++) d += `<ellipse cx="${tx}" cy="${ty + j * 8}" rx="5" ry="7" fill="${j % 2 ? '#9b7fd1' : '#b49be0'}"/>`;
+    });
+  }
+  else if (t === 'jazmin') {
+    abanico(9, -84, 21, 70, 22);
+    [[66, 100], [122, 82], [96, 124], [138, 122], [56, 138]].forEach(([x, y]) => d += `<circle cx="${x}" cy="${y}" r="9" fill="#fff"/><circle cx="${x}" cy="${y}" r="3.5" fill="#f6c453"/>`);
+  }
+  else if (t === 'palmera') { d += V(100, 190, 0, 64, '#6b4a2f', 6); abanico(9, -80, 20, 112, 12, 126); }
+  const pot = t === 'maceta'
+    ? `<path d="M52 150h96l-12 84h-72z" fill="${c}" stroke="${c}" stroke-width="8" stroke-linejoin="round"/><rect x="44" y="140" width="112" height="22" rx="9" fill="${c}"/><rect x="44" y="140" width="112" height="7" rx="3.5" fill="rgba(255,255,255,.3)"/><rect x="64" y="186" width="72" height="6" rx="3" fill="rgba(255,255,255,.35)"/>`
+    : maceta(c);
+  return `<svg viewBox="0 0 200 250" preserveAspectRatio="xMidYMax meet" aria-hidden="true"><circle cx="100" cy="150" r="88" fill="rgba(255,255,255,.4)"/>${d}${pot}</svg>`;
+}
+/* si el producto tiene img usa la foto real, si no usa el dibujo */
+const visual = p => p.img ? `<img src="${esc(p.img)}" alt="${esc(p.n)}" loading="lazy" onerror="this.remove()">` : arte(p.tipo, p.m);
+document.querySelectorAll('[data-arte]').forEach(el => el.innerHTML = arte(el.dataset.arte));
+const aviso = m => { const a = $('#aviso'); a.querySelector('span').textContent = m; a.classList.add('on'); clearTimeout(aviso.t); aviso.t = setTimeout(() => a.classList.remove('on'), 2600); };
+
+/* ===== animaciones de entrada ===== */
+document.querySelectorAll('[data-letras]').forEach((el, k) => {
+  el.innerHTML = [...el.textContent].map((c, i) => `<b style="--i:${i + k * 5}">${c}</b>`).join('');
+});
+$('#tk').innerHTML = $('#tk').innerHTML.repeat(4);
+const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); io.unobserve(e.target); } }), {threshold: .12});
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+const ioN = new IntersectionObserver(es => es.forEach(e => {
+  if (!e.isIntersecting) return;
+  const el = e.target, meta = +el.dataset.n; let n = 0;
+  const t = setInterval(() => { n = Math.min(meta, n + Math.max(1, Math.ceil(meta / 30))); el.textContent = n; if (n >= meta) clearInterval(t); }, 45);
+  ioN.unobserve(el);
+}));
+document.querySelectorAll('[data-n]').forEach(el => ioN.observe(el));
+/* las fotos del hero se mueven suave con el mouse */
+addEventListener('mousemove', e => {
+  const x = e.clientX / innerWidth - .5, y = e.clientY / innerHeight - .5;
+  document.querySelectorAll('.collage [data-v]').forEach(el => el.style.translate = `${x * el.dataset.v}px ${y * el.dataset.v}px`);
+});
+
+/* ===== categorias en mosaico ===== */
+const cats = [...new Set(PRODUCTOS.map(p => p.c))];
+$('#bento').innerHTML = cats.map((c, i) => `
+  <button class="t reveal" style="--d:${i * 90}ms" data-c="${c}">
+    <span class="art" style="background:${(TILE[c] || TILE.Interior)[1]}">${arte((TILE[c] || TILE.Interior)[0]).replace('xMidYMax', 'xMaxYMid')}</span>
+    <div><span><small>${PRODUCTOS.filter(p => p.c === c).length} productos</small><h3>${c}</h3></span><i><svg class="ic" aria-hidden="true"><use href="#i-arrow-right"/></svg></i></div>
+  </button>`).join('');
+document.querySelectorAll('#bento .reveal').forEach(el => io.observe(el));
+$('#bento').addEventListener('click', e => {
+  const b = e.target.closest('.t'); if (!b) return;
+  cat = b.dataset.c; pintar(); $('#tienda').scrollIntoView();
+});
+
+/* ===== catalogo: filtros, buscador y orden ===== */
+let cat = 'Todas', q = '', orden = '', max = 35000; const nivs = new Set();
+function pintarFiltros() {
+  $('#cats').innerHTML = ['Todas', ...cats].map(c => `<button class="cat${c === cat ? ' on' : ''}" data-c="${c}">${c}<em>${c === 'Todas' ? PRODUCTOS.length : PRODUCTOS.filter(p => p.c === c).length}</em></button>`).join('');
+  $('#nivs').innerHTML = Object.entries(NIVELES).map(([n, t]) => `<button class="niv${nivs.has(+n) ? ' on' : ''}" data-n="${n}"><svg class="ic" aria-hidden="true"><use href="#i-sun"/></svg>${t}</button>`).join('');
+  $('#max-t').textContent = 'Hasta ' + money(max);
+}
+function pintar() {
+  let l = PRODUCTOS.filter(p => (cat === 'Todas' || p.c === cat) && p.p <= max && (!nivs.size || nivs.has(p.nv)) && (p.n + ' ' + p.c).toLowerCase().includes(q.toLowerCase()));
+  if (orden === 'asc') l.sort((a, b) => a.p - b.p);
+  if (orden === 'desc') l.sort((a, b) => b.p - a.p);
+  if (orden === 'az') l.sort((a, b) => a.n.localeCompare(b.n));
+  $('#grilla').innerHTML = l.length ? l.map((p, i) => `
+    <article class="pc" style="--i:${i}">
+      <div class="pf" style="background:${p.bg}"><span class="num">${String(p.id).padStart(2, '0')}</span>${p.etq ? `<span class="etq">${p.etq}</span>` : ''}
+        ${visual(p)}
+        <button class="plus" data-id="${p.id}" aria-label="Agregar ${esc(p.n)} al carrito"><svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg></button></div>
+      <div class="pi"><div><h3>${esc(p.n)}</h3><small><svg class="ic" aria-hidden="true"><use href="#i-sun"/></svg>${p.luz}</small></div><span class="pr">${money(p.p)}</span></div>
+    </article>`).join('') : '<div class="vacio">No encontramos plantas con esos filtros.</div>';
+  $('#cuenta').textContent = l.length + (l.length === 1 ? ' producto' : ' productos');
+  pintarFiltros();
+}
+$('#cats').addEventListener('click', e => { const b = e.target.closest('.cat'); if (b) { cat = b.dataset.c; pintar(); } });
+$('#nivs').addEventListener('click', e => { const b = e.target.closest('.niv'); if (!b) return; const n = +b.dataset.n; nivs.has(n) ? nivs.delete(n) : nivs.add(n); pintar(); });
+$('#q').addEventListener('input', e => { q = e.target.value; pintar(); });
+$('#orden').addEventListener('change', e => { orden = e.target.value; pintar(); });
+$('#max').addEventListener('input', e => { max = +e.target.value; pintar(); });
+$('#limpiar').onclick = () => { cat = 'Todas'; q = ''; orden = ''; max = 35000; nivs.clear(); $('#q').value = ''; $('#orden').value = ''; $('#max').value = 35000; pintar(); };
+
+/* ===== carrito y calculos ===== */
+let carro = leer('greenbrote-carro', {}), cupon = leer('greenbrote-cupon', '');
+const prod = id => PRODUCTOS.find(p => p.id == id);
+function totales() {
+  const sub = Object.entries(carro).reduce((a, [id, n]) => a + prod(id).p * n, 0);
+  const pct = CUPONES[cupon] || 0, desc = Math.round(sub * pct), base = sub - desc;
+  const env = !sub ? 0 : base >= GRATIS ? 0 : ENVIO, total = base + env;
+  return {sub, pct, desc, base, env, total, iva: total - total / (1 + IVA), cant: Object.values(carro).reduce((a, n) => a + n, 0)};
+}
+function pintarCarro() {
+  const t = totales(), ids = Object.keys(carro);
+  $('#badge').textContent = t.cant;
+  $('#items').innerHTML = ids.length ? ids.map(id => { const p = prod(id), n = carro[id]; return `
+    <div class="it">
+      <div class="th" style="background:${p.bg}">${visual(p)}</div>
+      <div><b>${esc(p.n)}</b><small>${money(p.p)} c/u</small><br>
+        <div class="qty"><button data-m="${id}" aria-label="Quitar una unidad"><svg class="ic" aria-hidden="true"><use href="#i-minus"/></svg></button><i>${n}</i><button data-s="${id}" aria-label="Sumar una unidad"><svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg></button></div></div>
+      <div class="lado"><span>${money(p.p * n)}</span><button data-x="${id}" aria-label="Eliminar"><svg class="ic" aria-hidden="true"><use href="#i-trash-can"/></svg></button></div>
+    </div>`; }).join('') : '<div class="vacio-c"><svg class="ic" aria-hidden="true"><use href="#i-basket-shopping"/></svg>Tu carrito está vacío.<br>Sumá alguna planta para empezar.</div>';
+  $('#r-sub').textContent = money(t.sub);
+  $('#r-desc-f').style.display = t.desc ? '' : 'none';
+  $('#r-desc-n').textContent = 'Descuento ' + Math.round(t.pct * 100) + '% (' + cupon + ')';
+  $('#r-desc').textContent = '-' + money(t.desc);
+  $('#r-env').textContent = t.env ? money(t.env) : (t.sub ? 'Gratis' : '-');
+  $('#r-tot').textContent = money(t.total);
+  $('#r-iva').textContent = 'Incluye IVA: ' + money(t.iva);
+  $('#b-pagar').disabled = !ids.length; $('#b-pagar').style.opacity = ids.length ? 1 : .4;
+  const falta = Math.max(0, GRATIS - t.base);
+  $('#envio-t').innerHTML = !t.sub ? 'Envío gratis desde ' + money(GRATIS) : falta ? `Te faltan <b>${money(falta)}</b> para el envío gratis` : '<svg class="ic" aria-hidden="true"><use href="#i-circle-check"/></svg> ¡Tenés envío gratis!';
+  $('#envio-b').style.width = Math.min(100, t.base / GRATIS * 100) + '%';
+  guardar('greenbrote-carro', carro);
+}
+const agregar = (id, d = 1) => { carro[id] = (carro[id] || 0) + d; if (carro[id] <= 0) delete carro[id]; pintarCarro(); };
+$('#grilla').addEventListener('click', e => {
+  const b = e.target.closest('.plus'); if (!b) return;
+  agregar(b.dataset.id);
+  const bd = $('#badge'); bd.classList.remove('bump'); void bd.offsetWidth; bd.classList.add('bump');
+  b.classList.add('ok'); b.innerHTML = '<svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>';
+  setTimeout(() => { b.classList.remove('ok'); b.innerHTML = '<svg class="ic" aria-hidden="true"><use href="#i-plus"/></svg>'; }, 1100);
+});
+$('#items').addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b) return;
+  if (b.dataset.s) agregar(b.dataset.s, 1);
+  if (b.dataset.m) agregar(b.dataset.m, -1);
+  if (b.dataset.x) { delete carro[b.dataset.x]; pintarCarro(); }
+});
+$('#b-cupon').onclick = () => {
+  const c = $('#cupon').value.trim().toUpperCase(), m = $('#cupon-msg');
+  if (CUPONES[c]) { cupon = c; m.className = 'cupon-msg ok'; m.textContent = 'Código aplicado'; }
+  else { cupon = ''; m.className = 'cupon-msg mal'; m.textContent = c ? 'Ese código no existe' : 'Escribí un código'; }
+  guardar('greenbrote-cupon', cupon); pintarCarro();
+};
+
+/* ===== abrir y cerrar paneles ===== */
+const panelCarro = $('#carro'), auth = $('#auth');
+const bloquear = () => document.body.classList.toggle('bloq', panelCarro.classList.contains('on') || auth.classList.contains('on'));
+function abrirCarro(on) { panelCarro.classList.toggle('on', on); if (on) $('#exito').classList.remove('on'); bloquear(); }
+function abrirAuth(on, m = 'login', msg) { auth.classList.toggle('on', on); if (on) { cambiarModo(m, msg); $('#a-err').textContent = ''; } bloquear(); }
+$('#b-carro').onclick = () => abrirCarro(true);
+$('#x-carro').onclick = () => abrirCarro(false);
+$('#x-auth').onclick = () => abrirAuth(false);
+document.addEventListener('keydown', e => { if (e.key === 'Escape') { abrirAuth(false); abrirCarro(false); } });
+
+/* ===== cuentas: ingresar y crear cuenta (demo guardada en el navegador) ===== */
+let modo = 'login', volverACarro = false;
+const hash = async t => { try { const b = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(t)); return [...new Uint8Array(b)].map(x => x.toString(16).padStart(2, '0')).join(''); } catch (e) { return btoa(unescape(encodeURIComponent(t))); } };
+function cambiarModo(m, msg) {
+  modo = m; auth.classList.toggle('reg', m === 'reg');
+  document.querySelectorAll('.tabs button').forEach(b => b.classList.toggle('on', b.dataset.modo === m));
+  $('#a-btn').textContent = m === 'reg' ? 'Crear cuenta' : 'Ingresar';
+  $('#a-tit').textContent = m === 'reg' ? 'Creá tu cuenta' : 'Bienvenido de vuelta';
+  $('#a-sub').textContent = msg || (m === 'reg' ? 'Es gratis y lleva menos de un minuto.' : 'Ingresá para guardar tus datos y finalizar tu compra.');
+  $('#a-p').autocomplete = m === 'reg' ? 'new-password' : 'current-password';
+}
+document.querySelectorAll('.tabs button').forEach(b => b.onclick = () => cambiarModo(b.dataset.modo));
+document.querySelectorAll('[data-abrir-cuenta]').forEach(b => b.onclick = () => abrirAuth(true, 'reg'));
+$('#b-cuenta').onclick = () => abrirAuth(true);
+$('#ojo').onclick = () => { const p = $('#a-p'), ver = p.type === 'password'; p.type = ver ? 'text' : 'password'; $('#ojo').innerHTML = ver ? '<svg class="ic" aria-hidden="true"><use href="#i-eye-slash"/></svg>' : '<svg class="ic" aria-hidden="true"><use href="#i-eye"/></svg>'; };
+function pintarSesion() {
+  const u = leer('greenbrote-sesion', null);
+  $('#user').classList.toggle('on', !!u); $('#b-cuenta').style.display = u ? 'none' : '';
+  if (u) $('#user-n').textContent = 'Hola, ' + u.n.split(' ')[0];
+}
+$('#form-auth').addEventListener('submit', async e => {
+  e.preventDefault();
+  const n = $('#a-n').value.trim(), em = $('#a-e').value.trim().toLowerCase(), pw = $('#a-p').value, err = $('#a-err');
+  const usuarios = leer('greenbrote-usuarios', []);
+  if (modo === 'reg' && n.length < 2) return err.textContent = 'Escribí tu nombre.';
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)) return err.textContent = 'Revisá que el email esté bien escrito.';
+  if (pw.length < 6) return err.textContent = 'La contraseña necesita al menos 6 caracteres.';
+  const h = await hash(pw); let u = usuarios.find(x => x.e === em);
+  if (modo === 'reg') {
+    if (u) return err.textContent = 'Ya existe una cuenta con ese email.';
+    u = {n, e: em, h}; usuarios.push(u); guardar('greenbrote-usuarios', usuarios);
+  } else if (!u || u.h !== h) return err.textContent = 'Email o contraseña incorrectos.';
+  guardar('greenbrote-sesion', {n: u.n, e: u.e});
+  e.target.reset(); abrirAuth(false); pintarSesion();
+  aviso((modo === 'reg' ? 'Cuenta creada. ' : '') + 'Hola, ' + u.n.split(' ')[0]);
+  if (volverACarro) { volverACarro = false; setTimeout(() => abrirCarro(true), 600); }
+});
+$('#salir').onclick = () => { localStorage.removeItem('greenbrote-sesion'); pintarSesion(); aviso('Sesión cerrada'); };
+
+/* ===== finalizar compra: pide cuenta y muestra la confirmacion ===== */
+$('#b-pagar').onclick = () => {
+  const u = leer('greenbrote-sesion', null);
+  if (!u) { volverACarro = true; abrirCarro(false); setTimeout(() => abrirAuth(true, 'login', 'Ingresá o creá tu cuenta para finalizar la compra.'), 400); return; }
+  const t = totales(), n = 'GB-' + Date.now().toString().slice(-6);
+  $('#exito').innerHTML = `<svg class="ic" aria-hidden="true"><use href="#i-circle-check"/></svg><h4>¡Gracias por tu compra,<br>${esc(u.n.split(' ')[0])}!</h4>
+    <p>Tu pedido <b>#${n}</b> está confirmado.</p><p>Total pagado: <b>${money(t.total)}</b></p><p>Te enviamos el detalle a ${esc(u.e)}.</p>
+    <button class="btn oscuro" id="seguir">Seguir comprando</button>`;
+  $('#exito').classList.add('on');
+  carro = {}; cupon = ''; guardar('greenbrote-cupon', ''); $('#cupon').value = ''; $('#cupon-msg').textContent = ''; pintarCarro();
+  $('#seguir').onclick = () => abrirCarro(false);
+};
+
+/* ===== menu movil y arranque ===== */
+$('#burger').onclick = () => $('#menu').classList.toggle('on');
+document.querySelectorAll('#menu a').forEach(a => a.addEventListener('click', () => $('#menu').classList.remove('on')));
+$('#anio').textContent = new Date().getFullYear();
+pintar(); pintarCarro(); pintarSesion();
+</script>
+</body>
+</html>

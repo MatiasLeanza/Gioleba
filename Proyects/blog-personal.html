@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Leafy</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%232f7d4f' d='M12 2C6 8 4 13 4 16a8 8 0 0 0 16 0c0-3-2-8-8-14z'/%3E%3Cpath d='M12 9v11' stroke='%23fff' stroke-width='1.6' stroke-linecap='round' fill='none'/%3E%3C/svg%3E">
+<meta name="description" content="Notas breves sobre naturaleza, hábitos, tecnología y cultura.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<style>
+/* ===== variables ===== */
+:root{--bg:#faf8f5;--tx:#1b1b1f;--mut:#6d6a66;--ac:#2f7d4f;--line:#e8e3dc;--card:#fff;--serif:'Fraunces',Georgia,serif;--sans:'Inter',system-ui,sans-serif;--ease:cubic-bezier(.22,1,.36,1)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{font-family:var(--sans);background:var(--bg);color:var(--tx);line-height:1.6;-webkit-font-smoothing:antialiased}
+body.bloq{overflow:hidden}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button,input,textarea{font:inherit;color:inherit}
+.wrap{width:min(1180px,92%);margin-inline:auto}
+:focus-visible{outline:2px solid var(--ac);outline-offset:3px;border-radius:4px}
+
+/* ===== navegacion ===== */
+.nav{position:fixed;top:0;left:0;right:0;z-index:40;transition:background .4s,box-shadow .4s}
+.nav.scroll{background:rgba(250,248,245,.85);backdrop-filter:blur(12px);box-shadow:0 1px 0 var(--line)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:70px}
+.logo{font-family:var(--serif);font-weight:700;font-size:1.35rem;display:flex;align-items:center;gap:10px}
+.logo i{color:var(--ac);transition:transform .5s var(--ease)}
+.logo:hover i{transform:rotate(-25deg) scale(1.15)}
+.menu{display:flex;align-items:center;gap:30px}
+.menu a:not(.btn){position:relative;font-size:.93rem;font-weight:500}
+.menu a:not(.btn)::after{content:"";position:absolute;left:0;right:0;bottom:-4px;height:2px;background:var(--ac);transform:scaleX(0);transform-origin:left;transition:transform .35s var(--ease)}
+.menu a:not(.btn):hover::after{transform:scaleX(1)}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:12px 24px;border-radius:40px;border:0;background:var(--tx);color:#fff;font-weight:600;font-size:.92rem;cursor:pointer;transition:transform .3s var(--ease),background .3s,box-shadow .3s}
+.btn:hover{background:var(--ac);transform:translateY(-3px);box-shadow:0 12px 24px rgba(47,125,79,.3)}
+.btn.claro{background:transparent;color:var(--tx);border:1.5px solid var(--tx)}
+.btn.claro:hover{color:#fff;background:var(--tx);box-shadow:none}
+.btn i{transition:transform .3s}
+.btn:hover i{transform:translateX(4px)}
+.burger{display:none;background:none;border:0;font-size:1.3rem;cursor:pointer}
+
+/* ===== hero ===== */
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;padding:120px 0 70px;overflow:hidden}
+.blob{position:absolute;border-radius:50%;filter:blur(70px);opacity:.45;animation:flota 12s ease-in-out infinite;pointer-events:none}
+.b1{width:380px;height:380px;background:#cfe6d3;top:-80px;left:-100px}
+.b2{width:320px;height:320px;background:#e6efc9;bottom:-60px;right:30%;animation-delay:-5s}
+@keyframes flota{50%{transform:translate(40px,30px) scale(1.1)}}
+.hero-grid{position:relative;display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}
+.hero .kicker{display:inline-flex;gap:8px;align-items:center;color:var(--ac);font-weight:600;font-size:.88rem;margin-bottom:22px;opacity:0;animation:sube .8s .1s var(--ease) forwards}
+.hero h1{font-family:var(--serif);font-weight:600;font-size:clamp(2.6rem,6.2vw,5rem);line-height:1.05;letter-spacing:-.025em}
+.pal{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.12em}
+.pal i{display:inline-block;font-style:normal;transform:translateY(110%);animation:sube-pal .9s var(--ease) forwards;animation-delay:calc(.25s + var(--i) * .08s)}
+@keyframes sube-pal{to{transform:none}}
+.hero p.sub{max-width:46ch;margin:26px 0 34px;color:var(--mut);font-size:1.1rem;opacity:0;animation:sube .9s .9s var(--ease) forwards}
+.hero .acciones{display:flex;gap:14px;flex-wrap:wrap;opacity:0;animation:sube .9s 1.1s var(--ease) forwards}
+@keyframes sube{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
+.hero-foto{position:relative;aspect-ratio:4/5;border-radius:220px 220px 28px 28px;overflow:hidden;background:linear-gradient(160deg,#cfe6d3,#6fa886);clip-path:inset(100% 0 0 0);animation:revela 1.4s .3s var(--ease) forwards}
+@keyframes revela{to{clip-path:inset(0)}}
+.hero-foto img{width:100%;height:118%;object-fit:cover;animation:zoom 14s ease-out forwards}
+@keyframes zoom{from{scale:1.18}to{scale:1}}
+.insignia{position:absolute;left:-18px;bottom:36px;background:#fff;border-radius:18px;padding:14px 18px;box-shadow:0 18px 40px rgba(27,27,31,.14);display:flex;gap:12px;align-items:center;animation:flota 6s ease-in-out infinite}
+.insignia i{width:40px;height:40px;border-radius:50%;background:#dcefe2;color:var(--ac);display:grid;place-items:center}
+.insignia b{display:block;font-size:.9rem;line-height:1.2}
+.insignia span{font-size:.78rem;color:var(--mut)}
+.hero-col{position:relative}
+
+/* ===== cinta de categorias ===== */
+.cinta{overflow:hidden;border-block:1px solid var(--line);padding:18px 0;background:#fff}
+.cinta-pista{display:flex;gap:46px;width:max-content;animation:desliza 30s linear infinite}
+.cinta:hover .cinta-pista{animation-play-state:paused}
+.cinta span{font-family:var(--serif);font-size:1.5rem;white-space:nowrap;display:flex;align-items:center;gap:46px}
+.cinta span i{color:var(--ac);font-size:.9rem}
+@keyframes desliza{to{transform:translateX(-50%)}}
+
+/* ===== secciones ===== */
+.seccion{padding:100px 0 40px}
+.cab{display:flex;justify-content:space-between;align-items:end;gap:20px;flex-wrap:wrap;margin-bottom:34px}
+.cab h2{font-family:var(--serif);font-size:clamp(2rem,4vw,3rem);line-height:1.1;letter-spacing:-.02em}
+.cab p{color:var(--mut);margin-top:8px}
+.herram{display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-bottom:38px}
+.buscar{position:relative;flex:1 1 260px;max-width:380px}
+.buscar i{position:absolute;left:18px;top:50%;translate:0 -50%;color:var(--mut)}
+.buscar input{width:100%;padding:13px 18px 13px 46px;border:1.5px solid var(--line);border-radius:40px;background:#fff;transition:border-color .3s,box-shadow .3s}
+.buscar input:focus{outline:0;border-color:var(--ac);box-shadow:0 0 0 4px rgba(47,125,79,.14)}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{padding:9px 18px;border-radius:40px;border:1.5px solid var(--line);background:#fff;cursor:pointer;font-size:.88rem;font-weight:500;transition:.3s var(--ease)}
+.chip:hover{border-color:var(--tx);transform:translateY(-2px)}
+.chip.on{background:var(--tx);color:#fff;border-color:var(--tx)}
+
+/* ===== tarjetas ===== */
+.grilla{display:grid;grid-template-columns:repeat(3,1fr);gap:40px 28px}
+.card{display:block}
+.card.grande{grid-column:span 2}
+.foto{position:relative;aspect-ratio:4/3;border-radius:22px;overflow:hidden;background:linear-gradient(135deg,hsl(var(--h) 45% 82%),hsl(var(--h) 40% 62%))}
+.grande .foto{aspect-ratio:16/9}
+.foto img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .9s var(--ease)}
+.card:hover .foto img{transform:scale(1.07)}
+.meta{display:flex;gap:14px;align-items:center;margin:18px 0 8px;font-size:.8rem;color:var(--mut)}
+.tag{color:var(--ac);font-weight:600}
+.card h3{font-family:var(--serif);font-weight:600;font-size:1.45rem;line-height:1.25;margin-bottom:8px;transition:color .3s}
+.grande h3{font-size:2rem}
+.card:hover h3{color:var(--ac)}
+.card p{color:var(--mut);font-size:.96rem;display:-webkit-box;-webkit-box-orient:vertical;overflow:hidden}
+.mas{display:inline-flex;gap:8px;align-items:center;margin-top:12px;font-weight:600;font-size:.9rem}
+.mas i{transition:transform .3s var(--ease)}
+.card:hover .mas i{transform:translateX(6px)}
+.vacio{grid-column:1/-1;text-align:center;padding:60px 0;color:var(--mut)}
+.vacio i{font-size:2.2rem;color:var(--line);margin-bottom:12px}
+
+/* ===== sobre mi ===== */
+.sobre{display:grid;grid-template-columns:.9fr 1.1fr;gap:64px;align-items:center;padding:80px 0 110px}
+.sobre-arte{position:relative;aspect-ratio:1;border-radius:28px;overflow:hidden;background:linear-gradient(135deg,#cfe6d3,#6fa886)}
+.sobre-arte i{position:absolute;color:rgba(255,255,255,.88);animation:flota 8s ease-in-out infinite}
+.sobre-arte .l1{font-size:9rem;top:14%;left:20%;rotate:-25deg}
+.sobre-arte .l2{font-size:5rem;right:14%;bottom:16%;rotate:35deg;animation-delay:-3s}
+.sobre-arte .l3{font-size:3rem;left:16%;bottom:14%;rotate:-60deg;animation-delay:-6s;opacity:.7}
+.sobre h2{font-family:var(--serif);font-size:clamp(2rem,4vw,3rem);line-height:1.1;margin-bottom:18px}
+.sobre p{color:var(--mut);margin-bottom:14px;max-width:52ch}
+.cifras{display:flex;gap:40px;margin-top:28px}
+.cifras b{display:block;font-family:var(--serif);font-size:2.4rem;line-height:1}
+.cifras span{font-size:.85rem;color:var(--mut)}
+
+/* ===== pie ===== */
+.pie{border-top:1px solid var(--line);padding:30px 0;color:var(--mut);font-size:.88rem}
+.pie .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+/* ===== aparicion al hacer scroll ===== */
+.reveal{opacity:0;transform:translateY(34px);transition:opacity .9s var(--ease),transform .9s var(--ease);transition-delay:var(--d,0ms)}
+.reveal.vis{opacity:1;transform:none}
+
+/* ===== lector de notas ===== */
+.lector{position:fixed;inset:0;z-index:60;background:var(--bg);overflow-y:auto;transform:translateY(100%);visibility:hidden;transition:transform .7s var(--ease),visibility 0s .7s}
+.lector.abierto{transform:none;visibility:visible;transition:transform .7s var(--ease)}
+.progreso{position:fixed;top:0;left:0;height:3px;width:0;background:var(--ac);z-index:70}
+.cerrar{position:fixed;top:18px;right:18px;z-index:70;width:46px;height:46px;border-radius:50%;border:0;background:#fff;box-shadow:0 8px 24px rgba(27,27,31,.16);cursor:pointer;transition:transform .4s var(--ease)}
+.cerrar:hover{transform:rotate(90deg)}
+.portada{height:min(72vh,640px);background:linear-gradient(135deg,hsl(var(--h) 45% 82%),hsl(var(--h) 40% 62%));overflow:hidden}
+.portada img{width:100%;height:100%;object-fit:cover;animation:zoom 2.4s var(--ease) both}
+.articulo{width:min(720px,90%);margin:-70px auto 0;position:relative;background:var(--bg);border-radius:28px 28px 0 0;padding:44px 0 80px}
+.articulo .meta{margin-top:0}
+.articulo h1{font-family:var(--serif);font-weight:600;font-size:clamp(2rem,5vw,3.2rem);line-height:1.1;letter-spacing:-.02em;margin:8px 0 28px}
+.texto{font-family:var(--serif);font-size:1.22rem;line-height:1.85}
+.texto p{margin-bottom:1.4em}
+.texto>p:first-child::first-letter{float:left;font-size:4.2rem;line-height:.85;padding:6px 12px 0 0;color:var(--ac);font-weight:700}
+.texto h2{font-size:1.7rem;margin:1.6em 0 .6em;line-height:1.2}
+.texto blockquote{border-left:3px solid var(--ac);padding:4px 0 4px 24px;margin:1.6em 0;font-size:1.4rem;font-style:italic}
+.fin{display:flex;gap:12px;flex-wrap:wrap;margin:40px 0 50px;padding-top:28px;border-top:1px solid var(--line)}
+.rel h4{font-family:var(--serif);font-size:1.5rem;margin-bottom:22px}
+.rel .grilla{grid-template-columns:1fr 1fr;gap:24px}
+
+/* ===== panel para publicar ===== */
+.velo{position:fixed;inset:0;z-index:80;background:rgba(27,27,31,.5);backdrop-filter:blur(4px);opacity:0;visibility:hidden;transition:opacity .4s,visibility 0s .4s}
+.velo.on{opacity:1;visibility:visible;transition:opacity .4s}
+.panel{position:fixed;top:0;right:0;bottom:0;width:min(480px,100%);z-index:90;background:#fff;padding:30px;overflow-y:auto;transform:translateX(100%);transition:transform .6s var(--ease);box-shadow:-20px 0 60px rgba(0,0,0,.12)}
+.panel.on{transform:none}
+.panel h3{font-family:var(--serif);font-size:1.7rem;margin-bottom:4px}
+.panel>p{color:var(--mut);font-size:.92rem;margin-bottom:22px}
+.panel .x{position:absolute;top:22px;right:22px;background:none;border:0;font-size:1.2rem;cursor:pointer;transition:transform .3s}
+.panel .x:hover{transform:rotate(90deg)}
+.campo{margin-bottom:16px}
+.campo label{display:block;font-weight:600;font-size:.84rem;margin-bottom:6px}
+.campo input,.campo textarea{width:100%;padding:12px 15px;border:1.5px solid var(--line);border-radius:12px;background:var(--bg);transition:border-color .3s,box-shadow .3s}
+.campo textarea{min-height:200px;resize:vertical;line-height:1.6}
+.campo input:focus,.campo textarea:focus{outline:0;border-color:var(--ac);box-shadow:0 0 0 4px rgba(47,125,79,.14)}
+.campo small{display:block;margin-top:6px;color:var(--mut);font-size:.78rem}
+.campo.err input,.campo.err textarea{border-color:#d44}
+.panel .btn{width:100%;justify-content:center;margin-top:6px}
+
+/* ===== aviso ===== */
+.aviso{position:fixed;left:50%;bottom:28px;z-index:100;translate:-50% 140px;background:var(--tx);color:#fff;padding:14px 24px;border-radius:40px;font-size:.92rem;display:flex;gap:10px;align-items:center;transition:translate .6s var(--ease)}
+.aviso.on{translate:-50% 0}
+.aviso i{color:#7fd6a0}
+
+/* ===== responsive ===== */
+@media (max-width:900px){
+  .hero-grid,.sobre{grid-template-columns:1fr;gap:40px}
+  .hero{padding-top:100px}
+  .hero-foto{max-width:420px;margin-inline:auto;width:100%}
+  .grilla{grid-template-columns:1fr 1fr}
+  .insignia{left:8px}
+}
+@media (max-width:640px){
+  .burger{display:block}
+  .menu{position:absolute;top:70px;left:0;right:0;flex-direction:column;align-items:flex-start;gap:0;background:var(--bg);padding:0 5%;max-height:0;overflow:hidden;transition:max-height .5s var(--ease),padding .5s}
+  .menu.on{max-height:320px;padding:10px 5% 24px;box-shadow:0 10px 24px rgba(0,0,0,.06)}
+  .menu a:not(.btn){padding:12px 0}
+  .grilla,.rel .grilla{grid-template-columns:1fr}
+  .card.grande{grid-column:auto}
+  .grande h3{font-size:1.6rem}
+  .grande .foto{aspect-ratio:4/3}
+  .cifras{gap:24px}
+  .texto{font-size:1.1rem}
+  .articulo{margin-top:-40px;padding-top:32px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal,.hero .kicker,.hero p.sub,.hero .acciones,.pal i{opacity:1;transform:none}.hero-foto{clip-path:none}}
+</style>
+</head>
+<body>
+
+<!-- navegacion -->
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a href="#inicio" class="logo"><i class="fa-solid fa-leaf"></i>Leafy</a>
+    <button class="burger" id="burger" aria-label="Abrir menú"><i class="fa-solid fa-bars"></i></button>
+    <nav class="menu" id="menu">
+      <a href="#inicio">Inicio</a>
+      <a href="#notas">Notas</a>
+      <a href="#sobre">Acerca de</a>
+      <button class="btn" data-escribir><i class="fa-solid fa-pen"></i>Escribir</button>
+    </nav>
+  </div>
+</header>
+
+<main id="inicio">
+  <!-- hero -->
+  <section class="hero">
+    <span class="blob b1"></span><span class="blob b2"></span>
+    <div class="wrap hero-grid">
+      <div>
+        <h1 data-pal>Pequeñas ideas escritas con calma</h1>
+        <p class="sub">Notas breves sobre naturaleza, hábitos, tecnología y cultura. Un lugar liviano para leer sin apuro, desde cualquier pantalla.</p>
+        <div class="acciones">
+          <a href="#notas" class="btn">Leer las notas <i class="fa-solid fa-arrow-right"></i></a>
+          <button class="btn claro" data-escribir><i class="fa-solid fa-pen-nib"></i>Escribir una nota</button>
+        </div>
+      </div>
+      <div class="hero-col">
+        <div class="hero-foto"><img id="hero-img" src="https://picsum.photos/seed/cuaderno-hero/1200/1500" alt="Imagen de portada" onerror="this.remove()"></div>
+        <div class="insignia"><i class="fa-solid fa-book-open"></i><div><b id="ins-n">6 notas</b><span>y sumando</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- cinta de categorias -->
+  <div class="cinta" aria-hidden="true"><div class="cinta-pista" id="cinta"></div></div>
+
+  <!-- notas -->
+  <section class="seccion wrap" id="notas">
+    <div class="cab reveal">
+      <div><h2>Últimas notas</h2><p id="cuenta"></p></div>
+    </div>
+    <div class="herram reveal">
+      <label class="buscar"><i class="fa-solid fa-magnifying-glass"></i><input type="search" id="q" placeholder="Buscar una nota..." aria-label="Buscar notas"></label>
+      <div class="chips" id="chips"></div>
+    </div>
+    <div class="grilla" id="grilla"></div>
+  </section>
+
+  <!-- acerca de -->
+  <section class="wrap sobre" id="sobre">
+    <div class="sobre-arte reveal" aria-hidden="true"><i class="fa-solid fa-leaf l1"></i><i class="fa-solid fa-leaf l2"></i><i class="fa-solid fa-leaf l3"></i></div>
+    <div class="reveal" style="--d:150ms">
+      <h2>Un lugar para leer con calma</h2>
+      <p>Leafy reúne notas breves sobre naturaleza, hábitos, tecnología y cultura. Textos claros, bien cuidados y pensados para leerse sin apuro.</p>
+      <p>Cada nota se lee en pocos minutos, se encuentra por tema o con el buscador, y publicar una nueva lleva apenas unos clics.</p>
+      <div class="cifras">
+        <div><b data-n id="c-notas">0</b><span>notas</span></div>
+        <div><b data-n id="c-cats">0</b><span>categorías</span></div>
+        <div><b data-n id="c-min">0</b><span>min de lectura</span></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="pie"><div class="wrap"><span>© <span id="anio">2026</span> Leafy. Todos los derechos reservados.</span><span>Hecho con calma <i class="fa-solid fa-heart" style="color:var(--ac)"></i></span></div></footer>
+
+<!-- lector de una nota -->
+<div class="progreso" id="prog"></div>
+<article class="lector" id="lector" aria-label="Nota"></article>
+<button class="cerrar" id="cerrar" aria-label="Cerrar nota" style="display:none"><i class="fa-solid fa-xmark"></i></button>
+
+<!-- panel para escribir -->
+<div class="velo" id="velo"></div>
+<aside class="panel" id="panel" aria-label="Escribir una nota">
+  <button class="x" id="x" aria-label="Cerrar panel"><i class="fa-solid fa-xmark"></i></button>
+  <h3>Nueva nota</h3>
+  <p>Solo el título y el texto son obligatorios. Lo demás es opcional.</p>
+  <form id="form" novalidate>
+    <div class="campo"><label for="f-t">Título</label><input id="f-t" maxlength="90" placeholder="Un título que invite a leer"></div>
+    <div class="campo"><label for="f-c">Categoría</label><input id="f-c" list="cats" maxlength="24" placeholder="Elegí o escribí una nueva"><datalist id="cats"></datalist></div>
+    <div class="campo"><label for="f-i">Foto de portada <small style="display:inline">(link, opcional)</small></label><input id="f-i" type="url" placeholder="https://..."></div>
+    <div class="campo"><label for="f-x">Texto</label><textarea id="f-x" placeholder="Empezá a escribir..."></textarea><small>Dejá una línea en blanco entre párrafos. Usá ## para un subtítulo y &gt; para una cita.</small></div>
+    <button class="btn" type="submit"><i class="fa-solid fa-paper-plane"></i>Publicar nota</button>
+  </form>
+</aside>
+<div class="aviso" id="aviso"><i class="fa-solid fa-circle-check"></i><span></span></div>
+
+<script>
+/* ===== notas de ejemplo: aca se editan o se agregan las tuyas =====
+   cada nota: id, t (titulo), c (categoria), f (fecha), img (foto), txt (texto)
+   en txt: linea en blanco = parrafo nuevo, "## " = subtitulo, "> " = cita */
+const BASE = [
+ {id:'por-que-las-plantas-cambian-un-espacio',t:'Por qué las plantas cambian un espacio',c:'Naturaleza',f:'2026-11-14',img:'https://picsum.photos/seed/plantas-espacio/1400/900',
+  txt:'Basta una planta en una ventana para que un ambiente se sienta distinto. El verde suaviza las líneas rectas, aporta textura y le da vida a rincones que antes pasaban desapercibidos.\n\nAdemás de lo estético, convivir con plantas se asocia con espacios más agradables y con una sensación general de calma.\n\n## Empezar con lo simple\n\nLas especies resistentes, como el potus o la sansevieria, toleran riegos irregulares y poca luz. Son una buena puerta de entrada para cualquier hogar u oficina.\n\n> Un poco de verde alcanza para cambiar el ritmo de un lugar.'},
+ {id:'el-arte-de-descansar-bien',t:'El arte de descansar bien',c:'Bienestar',f:'2026-11-07',img:'https://picsum.photos/seed/descanso-bien/1400/900',
+  txt:'Descansar no es lo mismo que no hacer nada. El descanso de calidad es el que repone energía: dormir lo suficiente, hacer pausas y cambiar de actividad a lo largo del día.\n\nLas pausas cortas durante el trabajo ayudan a sostener la atención. Levantarse, estirarse o mirar por la ventana unos minutos hace una diferencia real.\n\n## Dormir es parte del plan\n\nHorarios regulares, ambientes oscuros y menos pantallas antes de acostarse son tres ajustes simples que suelen mejorar el sueño.'},
+ {id:'habitos-pequenos-grandes-cambios',t:'Hábitos pequeños que sostienen grandes cambios',c:'Hábitos',f:'2026-10-30',img:'https://picsum.photos/seed/habitos-chicos/1400/900',
+  txt:'Los grandes cambios rara vez empiezan con grandes gestos. Suelen construirse con acciones tan pequeñas que resulta fácil repetirlas todos los días.\n\nUn hábito funciona mejor cuando se asocia a algo que ya existe: tomar agua al despertar, caminar después de comer o leer unas páginas antes de dormir.\n\n> La constancia le gana a la intensidad.\n\nLo importante no es hacer mucho, sino hacerlo seguido.'},
+ {id:'una-web-mas-liviana-es-mejor',t:'Una web más liviana es una web mejor',c:'Tecnología',f:'2026-10-21',img:'https://picsum.photos/seed/web-liviana/1400/900',
+  txt:'Las páginas que cargan rápido se usan más y se abandonan menos. La velocidad no es un lujo: es parte de la experiencia.\n\nImágenes optimizadas, pocos recursos externos y un diseño claro suelen ser suficientes para lograr sitios ágiles, incluso con conexiones lentas.\n\n## Menos es más\n\nCada elemento que se agrega tiene un costo. Quitar lo que no aporta mejora la carga, la lectura y la accesibilidad al mismo tiempo.'},
+ {id:'el-valor-de-leer-despacio',t:'El valor de leer despacio',c:'Cultura',f:'2026-10-10',img:'https://picsum.photos/seed/leer-despacio/1400/900',
+  txt:'En una época de textos cortos y notificaciones constantes, leer con calma se volvió casi un acto de resistencia.\n\nLa lectura pausada permite comprender mejor, recordar más y disfrutar del lenguaje. Un buen párrafo merece tiempo.\n\n> Leer despacio es darle espacio a las ideas.\n\nEntre una pantalla y otra, unos minutos de lectura sin interrupciones pueden ser un pequeño refugio.'},
+ {id:'como-funciona-la-fotosintesis',t:'Cómo funciona la fotosíntesis, en simple',c:'Ciencia',f:'2026-09-29',img:'https://picsum.photos/seed/fotosintesis-hojas/1400/900',
+  txt:'Las hojas son pequeñas fábricas. Con luz del sol, agua y dióxido de carbono, las plantas producen su propio alimento y liberan oxígeno.\n\nEste proceso se llama fotosíntesis y ocurre en unas estructuras diminutas llamadas cloroplastos, donde la clorofila captura la luz y le da su color verde a las hojas.\n\n## Un ciclo que nos sostiene\n\nGran parte del oxígeno que se respira proviene de este proceso, y el alimento de casi todos los seres vivos depende, directa o indirectamente, de él.'}
+];
+let propias = [];
+try { propias = JSON.parse(localStorage.getItem('leafy-notas') || '[]'); } catch (e) {}
+const todas = () => [...propias, ...BASE];
+
+/* ===== utilidades ===== */
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fecha = f => new Date(f + 'T12:00:00').toLocaleDateString('es-AR', {day:'numeric', month:'long', year:'numeric'});
+const minutos = p => Math.max(1, Math.round(p.txt.split(/\s+/).length / 200));
+const hue = c => [...c].reduce((a, ch) => a + ch.charCodeAt(0) * 7, 0) % 360;
+const resumen = p => p.txt.split(/\n{2,}/).find(b => !/^(## |> )/.test(b)) || '';
+const cuerpo = t => t.split(/\n{2,}/).map(b => b.startsWith('## ') ? `<h2>${esc(b.slice(3))}</h2>` : b.startsWith('> ') ? `<blockquote>${esc(b.slice(2))}</blockquote>` : `<p>${esc(b).replace(/\n/g, '<br>')}</p>`).join('');
+const aviso = msg => { const a = $('#aviso'); a.querySelector('span').textContent = msg; a.classList.add('on'); setTimeout(() => a.classList.remove('on'), 2800); };
+
+/* ===== aparicion al hacer scroll ===== */
+const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); io.unobserve(e.target); } }), {threshold: .12});
+const observar = () => document.querySelectorAll('.reveal:not(.vis)').forEach(el => io.observe(el));
+
+/* ===== palabras del titulo que suben una a una ===== */
+document.querySelectorAll('[data-pal]').forEach(h => {
+  h.innerHTML = h.textContent.split(' ').map((w, i) => `<span class="pal"><i style="--i:${i}">${w}</i></span>`).join(' ');
+});
+
+/* ===== notas, filtros y buscador ===== */
+let cat = 'Todas', q = '';
+const cats = () => [...new Set(todas().map(p => p.c))];
+const tarjeta = (p, i, grande) => `
+  <a class="card reveal${grande ? ' grande' : ''}" href="#/nota/${p.id}" style="--d:${(i % 3) * 90}ms;--h:${hue(p.c)}">
+    <div class="foto" style="--h:${hue(p.c)}"><img src="${esc(p.img)}" alt="" loading="lazy" onerror="this.remove()"></div>
+    <div class="meta"><span class="tag">${esc(p.c)}</span><span>${fecha(p.f)}</span><span><i class="fa-regular fa-clock"></i> ${minutos(p)} min</span></div>
+    <h3>${esc(p.t)}</h3><p>${esc(resumen(p))}</p>
+    <span class="mas">Leer nota <i class="fa-solid fa-arrow-right"></i></span>
+  </a>`;
+
+function pintar() {
+  const lista = todas().filter(p => (cat === 'Todas' || p.c === cat) && (p.t + ' ' + p.txt + ' ' + p.c).toLowerCase().includes(q.toLowerCase()));
+  const grande = cat === 'Todas' && !q;
+  $('#grilla').innerHTML = lista.length ? lista.map((p, i) => tarjeta(p, i, grande && i === 0)).join('')
+    : '<div class="vacio"><i class="fa-regular fa-face-frown"></i><p>No encontramos notas con esa búsqueda.</p></div>';
+  $('#cuenta').textContent = lista.length + (lista.length === 1 ? ' nota' : ' notas');
+  observar();
+}
+function pintarBase() {
+  const cs = cats();
+  $('#chips').innerHTML = ['Todas', ...cs].map(c => `<button class="chip${c === cat ? ' on' : ''}" data-c="${esc(c)}">${esc(c)}</button>`).join('');
+  $('#cats').innerHTML = cs.map(c => `<option value="${esc(c)}">`).join('');
+  $('#cinta').innerHTML = [...cs, ...cs, ...cs, ...cs].map(c => `<span>${esc(c)}<i class="fa-solid fa-asterisk"></i></span>`).join('');
+  $('#ins-n').textContent = todas().length + ' notas';
+  $('#c-notas').dataset.n = todas().length; $('#c-cats').dataset.n = cs.length;
+  $('#c-min').dataset.n = todas().reduce((a, p) => a + minutos(p), 0);
+  pintar();
+}
+$('#chips').addEventListener('click', e => {
+  const b = e.target.closest('.chip'); if (!b) return;
+  cat = b.dataset.c;
+  document.querySelectorAll('.chip').forEach(c => c.classList.toggle('on', c === b));
+  pintar();
+});
+$('#q').addEventListener('input', e => { q = e.target.value; pintar(); });
+
+/* ===== contadores de sobre mi ===== */
+const ioN = new IntersectionObserver(es => es.forEach(e => {
+  if (!e.isIntersecting) return;
+  const el = e.target, meta = +el.dataset.n; let n = 0;
+  const t = setInterval(() => { n = Math.min(meta, n + Math.max(1, Math.ceil(meta / 30))); el.textContent = n; if (n >= meta) clearInterval(t); }, 40);
+  ioN.unobserve(el);
+}));
+const contar = () => document.querySelectorAll('[data-n]').forEach(el => ioN.observe(el));
+
+/* ===== lector de notas con ruta en el link (#/nota/id) ===== */
+const lector = $('#lector');
+function abrir(id) {
+  const p = todas().find(x => x.id === id); if (!p) { location.hash = '#notas'; return; }
+  const otras = todas().filter(x => x.id !== id).slice(0, 2);
+  const mia = propias.some(x => x.id === id);
+  lector.innerHTML = `
+    <div class="portada" style="--h:${hue(p.c)}"><img src="${esc(p.img)}" alt="" onerror="this.remove()"></div>
+    <div class="articulo">
+      <div class="meta"><span class="tag">${esc(p.c)}</span><span>${fecha(p.f)}</span><span><i class="fa-regular fa-clock"></i> ${minutos(p)} min de lectura</span></div>
+      <h1>${esc(p.t)}</h1>
+      <div class="texto">${cuerpo(p.txt)}</div>
+      <div class="fin">
+        <a class="btn claro" href="#notas"><i class="fa-solid fa-arrow-left" style="transform:none"></i>Volver a las notas</a>
+        ${mia ? '<button class="btn claro" id="borrar"><i class="fa-regular fa-trash-can"></i>Eliminar nota</button>' : ''}
+      </div>
+      ${otras.length ? `<div class="rel"><h4>Seguí leyendo</h4><div class="grilla">${otras.map((o, i) => tarjeta(o, i, false)).join('')}</div></div>` : ''}
+    </div>`;
+  lector.querySelectorAll('.reveal').forEach(el => el.classList.add('vis'));
+  lector.scrollTop = 0;
+  lector.classList.add('abierto');
+  $('#cerrar').style.display = 'block';
+  document.body.classList.add('bloq');
+  const b = $('#borrar');
+  if (b) b.onclick = () => {
+    propias = propias.filter(x => x.id !== id); guardar();
+    location.hash = '#notas'; pintarBase(); aviso('Nota eliminada');
+  };
+}
+function cerrarLector() {
+  lector.classList.remove('abierto');
+  $('#cerrar').style.display = 'none';
+  document.body.classList.remove('bloq');
+  $('#prog').style.width = '0';
+}
+function ruta() {
+  const m = location.hash.match(/^#\/nota\/(.+)$/);
+  m ? abrir(decodeURIComponent(m[1])) : cerrarLector();
+}
+window.addEventListener('hashchange', ruta);
+$('#cerrar').onclick = () => { location.hash = '#notas'; };
+document.addEventListener('keydown', e => { if (e.key === 'Escape') { if ($('#panel').classList.contains('on')) panel(false); else if (lector.classList.contains('abierto')) location.hash = '#notas'; } });
+/* barra de progreso de lectura */
+lector.addEventListener('scroll', () => {
+  const h = lector.scrollHeight - lector.clientHeight;
+  $('#prog').style.width = (h > 0 ? lector.scrollTop / h * 100 : 0) + '%';
+}, {passive: true});
+
+/* ===== panel para publicar ===== */
+const panelEl = $('#panel'), velo = $('#velo');
+function panel(abrirlo) {
+  panelEl.classList.toggle('on', abrirlo); velo.classList.toggle('on', abrirlo);
+  document.body.classList.toggle('bloq', abrirlo || lector.classList.contains('abierto'));
+  if (abrirlo) setTimeout(() => $('#f-t').focus(), 400);
+}
+document.querySelectorAll('[data-escribir]').forEach(b => b.addEventListener('click', () => { $('#menu').classList.remove('on'); panel(true); }));
+$('#x').onclick = velo.onclick = () => panel(false);
+const guardar = () => { try { localStorage.setItem('leafy-notas', JSON.stringify(propias)); } catch (e) { aviso('No se pudo guardar en este navegador'); } };
+$('#form').addEventListener('submit', e => {
+  e.preventDefault();
+  const t = $('#f-t').value.trim(), x = $('#f-x').value.trim();
+  $('#f-t').parentNode.classList.toggle('err', t.length < 3);
+  $('#f-x').parentNode.classList.toggle('err', x.length < 30);
+  if (t.length < 3 || x.length < 30) { aviso('Completá el título y un texto un poco más largo'); return; }
+  const id = t.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') + '-' + Date.now().toString(36);
+  propias.unshift({id, t, c: $('#f-c').value.trim() || 'Sin categoría', f: new Date().toISOString().slice(0, 10),
+    img: $('#f-i').value.trim() || 'https://picsum.photos/seed/' + id + '/1400/900', txt: x});
+  guardar(); e.target.reset(); panel(false); pintarBase(); contar();
+  aviso('Nota publicada'); setTimeout(() => { location.hash = '#/nota/' + id; }, 500);
+});
+
+/* ===== menu movil, cabecera y parallax ===== */
+$('#burger').onclick = () => $('#menu').classList.toggle('on');
+document.querySelectorAll('#menu a').forEach(a => a.addEventListener('click', () => $('#menu').classList.remove('on')));
+const heroImg = $('#hero-img');
+addEventListener('scroll', () => {
+  $('#nav').classList.toggle('scroll', scrollY > 20);
+  if (heroImg && scrollY < innerHeight) heroImg.style.translate = '0 ' + (scrollY * -.06) + 'px';
+}, {passive: true});
+
+/* ===== inicio ===== */
+$('#anio').textContent = new Date().getFullYear();
+pintarBase(); observar(); contar(); ruta();
+</script>
+</body>
+</html>

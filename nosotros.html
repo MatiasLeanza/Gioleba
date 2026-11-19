@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gioleba</title>
+  <meta name="description" content="Conocé al equipo detrás de Gioleba.">
+  <link rel="icon" href="img/logo-blanco.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- iconos font awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <!-- hoja de estilos compartida -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- cabecera y navegacion, el link activo se marca desde main.js -->
+  <header class="cabecera">
+    <div class="contenedor nav">
+      <!-- logo: reemplaza el archivo img/logo.svg por el tuyo -->
+      <a href="index.html" class="logo" aria-label="Gioleba, ir al inicio"><img src="img/logo.svg" alt="Gioleba" width="170" height="40"></a>
+      <button class="burger" aria-label="Abrir menú" aria-expanded="false"><span></span><span></span><span></span></button>
+      <ul class="menu">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="servicios.html">Servicios</a></li>
+          <!-- <li><a href="proyectos.html">Proyectos</a></li>-->
+        <li><a href="nosotros.html">Nosotros</a></li>
+        <li><a href="contacto.html">Contacto</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main>
+    <section class="pagina-titulo">
+      <div class="contenedor">
+        <h1 class="entra">Sobre nosotros</h1>
+        <p class="entra">Somos un equipo que combina diseño y programación para que tu idea llegue a internet sin complicaciones.</p>
+      </div>
+    </section>
+
+    <section class="seccion">
+      <div class="contenedor dos-col">
+        <div class="reveal">
+          <h2>Nuestra historia</h2>
+          <p>Gioleba nació de una idea simple: que cualquier negocio o proyecto, por chico que sea, merece soluciones digitales claras, confiables y fáciles de usar.</p>
+          <p>Hacemos todo el recorrido: pensamos la solución, desarrollamos tanto lo que se ve como lo que funciona por detrás, y te acompañamos después del lanzamiento.</p>
+        </div>
+        <div class="texto-der reveal">
+          <h3>Cómo trabajamos</h3>
+          <p>Creemos en las relaciones simples y a largo plazo. Cada proyecto empieza escuchando y termina con una herramienta o espacio digital que entendés y podés usar en tu día a día.</p>
+          <p>Hablamos sin tecnicismos y festejamos cada lanzamiento junto a quienes confían en nosotros.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="seccion alt">
+      <div class="contenedor">
+        <div class="titulo reveal"><h2>Lo que nos guía</h2></div>
+        <div class="grid-3">
+        <article class="tarjeta reveal"><div class="icono"><i class="fa-regular fa-comments"></i></div><h3>Claridad</h3><p>Hablamos en simple. Siempre sabés qué hacemos y por qué.</p></article>
+        <article class="tarjeta reveal"><div class="icono"><i class="fa-solid fa-handshake"></i></div><h3>Cercanía</h3><p>Trabajamos con vos, no para vos. Tu opinión importa en cada paso.</p></article>
+        <article class="tarjeta reveal"><div class="icono"><i class="fa-solid fa-medal"></i></div><h3>Calidad</h3><p>Cuidamos los detalles para que tu sitio sea rápido, lindo y duradero.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="banda">
+      <div class="contenedor reveal">
+        <h2>¿Listo para empezar tu proyecto?</h2>
+        <p>Contanos tu idea. Te respondemos en menos de 24 horas, sin compromiso.</p>
+        <a href="contacto.html" class="btn btn-turquesa">Empecemos</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- pie de pagina -->
+  <footer class="pie">
+    <div class="contenedor">
+      <div class="pie-grid">
+        <div>
+          <!-- logo version clara para fondo oscuro: img/logo-blanco.svg -->
+          <a href="index.html" class="logo" aria-label="Gioleba, ir al inicio"><img src="img/logo-blanco.svg" alt="Gioleba" width="170" height="40"></a>
+          <p>Creamos sitios web claros, rápidos y hechos a la medida de tu negocio.</p>
+        </div>
+        <div>
+          <h4>Navegá</h4>
+          <ul>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="servicios.html">Servicios</a></li>
+            <li><a href="proyectos.html">Proyectos</a></li>
+            <li><a href="nosotros.html">Nosotros</a></li>
+            <li><a href="contacto.html">Contacto</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Contacto</h4>
+          <ul>
+            <li><a href="mailto:Gioleba@gmail.com"><i class="fa-solid fa-envelope"></i>Gioleba@gmail.com</a></li>
+            <li><a href="https://wa.me/5491100000000" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i>+54 11 0000 0000</a></li>
+            <li><a href="https://instagram.com/Gioleba" target="_blank" rel="noopener"><i class="fa-brands fa-instagram"></i>@Gioleba</a></li>
+            <li><span><i class="fa-solid fa-location-dot"></i>Buenos Aires, Argentina</span></li>
+          </ul>
+        </div>
+      </div>
+      <p class="pie-fin">© <span class="anio">2026</span> Gioleba. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <!-- comportamiento compartido -->
+  <script src="main.js"></script>
+</body>
+</html>
