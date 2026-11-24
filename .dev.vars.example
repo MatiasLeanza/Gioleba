@@ -1,0 +1,17 @@
+# Copia este archivo como .dev.vars para probar en local.
+# .dev.vars esta en .gitignore: no se sube nunca.
+# En produccion estas variables se cargan en el panel de Cloudflare.
+
+NOTION_TOKEN=ntn_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+NOTION_DATABASE_ID=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+# Alternativa a NOTION_DATABASE_ID (si la tenes, gana esta):
+# NOTION_DATA_SOURCE_ID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+
+# Opcional: aviso por mail con Resend
+# RESEND_API_KEY=re_xxxxxxxxxxxxxxxxxxxx
+# NOTIFY_EMAIL=Gioleba@gmail.com
+# RESEND_FROM=Gioleba <web@tudominio.com>
+
+# Opcional: verificacion anti-bot (requiere agregar el widget en contacto.html)
+# TURNSTILE_SECRET_KEY=0x4AAAAAAA...

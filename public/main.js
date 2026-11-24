@@ -1,10 +1,12 @@
 /* ===== al cargar la pagina ===== */
 document.addEventListener('DOMContentLoaded', () => {
 
-  /* marca el link activo segun el archivo actual */
-  const actual = location.pathname.split('/').pop() || 'index.html';
+  /* marca el link activo segun el archivo actual.
+     Cloudflare sirve /contacto (sin .html), asi que se comparan sin extension */
+  const pagina = (location.pathname.split('/').pop() || 'index.html').replace(/\.html$/, '') || 'index';
   document.querySelectorAll('.menu a').forEach(a => {
-    if (a.getAttribute('href') === actual) a.classList.add('activo');
+    const destino = (a.getAttribute('href') || '').split('/').pop().replace(/\.html$/, '') || 'index';
+    if (destino === pagina) a.classList.add('activo');
   });
 
   /* menu movil */
@@ -52,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }));
 
-  /* formulario de contacto con validacion */
+  /* formulario de contacto: validacion en el navegador + envio a /api/contacto */
   const form = document.querySelector('#form-contacto');
   if (form) {
     const reglas = {
@@ -60,8 +62,19 @@ document.addEventListener('DOMContentLoaded', () => {
       email: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v),
       mensaje: v => v.trim().length >= 15
     };
-    form.addEventListener('submit', e => {
+    const boton = form.querySelector('button[type="submit"]');
+    const aviso = document.querySelector('#form-aviso');
+    const textoBoton = boton ? boton.textContent : '';
+
+    const mostrarAviso = texto => {
+      if (!aviso) return;
+      aviso.textContent = texto || '';
+      aviso.hidden = !texto;
+    };
+
+    form.addEventListener('submit', async e => {
       e.preventDefault();
+      mostrarAviso('');
       let ok = true;
       Object.keys(reglas).forEach(nombre => {
         const campo = form.elements[nombre].closest('.campo');
@@ -70,10 +83,63 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!valido) ok = false;
       });
       if (!ok) return;
-      /* aca se conectaria con tu backend o un servicio de formularios */
-      form.style.display = 'none';
-      document.querySelector('.exito').classList.add('visible');
+
+      const datos = new FormData(form);
+      const cuerpo = {
+        nombre: datos.get('nombre') || '',
+        email: datos.get('email') || '',
+        tel: datos.get('tel') || '',
+        negocio: datos.get('negocio') || '',
+        mensaje: datos.get('mensaje') || '',
+        tipo: datos.getAll('tipo'),
+        website: datos.get('website') || '', /* honeypot: un humano lo deja vacio */
+        turnstileToken: datos.get('cf-turnstile-response') || ''
+      };
+
+      if (boton) {
+        boton.disabled = true;
+        boton.textContent = 'Enviando...';
+      }
+
+      try {
+        const r = await fetch('/api/contacto', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(cuerpo)
+        });
+        const res = await r.json().catch(() => ({}));
+
+        if (!r.ok || !res.ok) {
+          if (res.error === 'rate') {
+            mostrarAviso('Recibimos varios mensajes seguidos. Esperá unos minutos o escribinos por WhatsApp.');
+          } else if (res.error === 'datos') {
+            mostrarAviso('Revisá los datos: hay algo que no pudimos validar.');
+          } else {
+            mostrarAviso('No pudimos enviar el mensaje. Escribinos a Gioleba@gmail.com y lo resolvemos.');
+          }
+          if (boton) {
+            boton.disabled = false;
+            boton.textContent = textoBoton;
+          }
+          return;
+        }
+
+        form.style.display = 'none';
+        const exito = document.querySelector('.exito');
+        if (exito) {
+          exito.classList.add('visible');
+          exito.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      } catch (err) {
+        console.error('Error enviando el formulario:', err);
+        mostrarAviso('No pudimos enviar el mensaje. Revisá tu conexión o escribinos a Gioleba@gmail.com.');
+        if (boton) {
+          boton.disabled = false;
+          boton.textContent = textoBoton;
+        }
+      }
     });
+
     /* limpia el error mientras se escribe */
     form.addEventListener('input', e => e.target.closest('.campo')?.classList.remove('error'));
   }

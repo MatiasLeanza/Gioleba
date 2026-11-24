@@ -1,0 +1,12 @@
+# dependencias y artefactos locales
+node_modules/
+.wrangler/
+
+# secretos: NUNCA al repo
+.dev.vars
+.env
+.env.*
+
+# sistema
+.DS_Store
+Thumbs.db
